@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Services } from "./Services";
+import Services from "./Services";
 import { DateTimeSelection } from "./DateTimeSelection";
-import { ConusmerDetails } from "./CustomerDetails";
+import { CustomerDetails } from "./CustomerDetails";
 
 const services = [
   {
@@ -47,19 +47,22 @@ export default function BookingFlow() {
     // clear the date and time when a new service is selected
     setSelectedDate(null);
     setSelectedTime(null);
+  };
 
     // move to the next step
-    setStep(2);
+    const goToDateTime = () => {
+      setStep(2);
   };
 
   return (
-    <div className="bg-white max-w-md mx-auto">
+    <div>
       {/* only show the serviceSelection when in step 1 */}
       {step === 1 && (
         <Services
           services={services}
           selectedService={selectedService}
           onSelectedService={handleSelectService}
+          onContinue={goToDateTime}
         />
       )}
       {/* only show the DateTimeSelection when in step 2 */}
@@ -74,7 +77,7 @@ export default function BookingFlow() {
       )}
       {/* only show customer details, date/time in step 3*/}
       {step == 3 && (
-        <ConusmerDetails
+        <CustomerDetails
           selectedService={selectedService}
           selectedDate={selectedDate}
           selectedTime={selectedTime}
