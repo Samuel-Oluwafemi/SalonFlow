@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Services from "./Services";
-import { DateTimeSelection } from "./DateTimeSelection";
-import { CustomerDetails } from "./CustomerDetails";
-
+import DateTimeSelection from "./DateTimeSelection";
+import CustomerDetails from "./CustomerDetails";
+// Sample services data
 const services = [
   {
     id: 1,
@@ -49,9 +49,23 @@ export default function BookingFlow() {
     setSelectedTime(null);
   };
 
-    // move to the next step
-    const goToDateTime = () => {
-      setStep(2);
+  // move to the next step
+  const goToDateTime = () => {
+    setStep(2);
+  };
+
+  // Handle date and time selection
+  const handleDateSelection = (date) => {
+    setSelectedDate(date);
+    setSelectedTime(null); // reset time when date changes
+  };
+
+  const handleTimeSelection = (time) => {
+    setSelectedTime(time);
+  };
+
+  const goToDetails = () => {
+    setStep(3);
   };
 
   return (
@@ -70,13 +84,13 @@ export default function BookingFlow() {
         <DateTimeSelection
           selectedDate={selectedDate}
           selectedTime={selectedTime}
-          onSelectDate={setSelectedDate}
-          onselectTime={setSelectedTime}
-          onContinue={() => setStep(3)}
+          onSelectDate={handleDateSelection}
+          onSelectTime={handleTimeSelection}
+          onContinue={goToDetails}
         />
       )}
       {/* only show customer details, date/time in step 3*/}
-      {step == 3 && (
+      {step === 3 && (
         <CustomerDetails
           selectedService={selectedService}
           selectedDate={selectedDate}
