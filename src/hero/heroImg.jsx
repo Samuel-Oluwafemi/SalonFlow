@@ -4,7 +4,7 @@ export function Img() {
       <img
         className="mx-auto px-6 md:h-screen"
         src="business-mission-animate (1).svg"
-        alt=""
+        alt="hero-img"
       />
     </div>
   );

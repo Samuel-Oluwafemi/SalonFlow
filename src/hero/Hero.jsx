@@ -15,8 +15,10 @@ export default function Hero() {
           appointments.
         </p>
         <Link to="/services">
-          <button className="bg-purple-600 text-white px-6 py-3 rounded-md text-lg 
-          font-semibold hover:bg-purple-700 transition duration-300 mb-3">
+          <button
+            className="bg-purple-600 text-white px-6 py-3 rounded-md text-lg 
+          font-semibold hover:bg-purple-700 transition duration-300 mb-3"
+          >
             Book a Demo
           </button>
         </Link>
