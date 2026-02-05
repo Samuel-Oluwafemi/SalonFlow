@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section>
       <Navbar />
-      <div className="min-h-screen bg-white pt-28 text-center">
+      <div className="min-h-screen bg-blue-200 pt-28 text-center">
         <h1 className="text-4xl md:text-6xl md:mt-4 font-bold text-black mb-6 px-14 md:px-23">
           A Smarter Way for Brands to Manage Appointments
         </h1>

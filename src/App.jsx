@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <div className="max-w-7xl bg-blue-200 mx-auto ">
+      <div className="max-w-7xl bg-white mx-auto ">
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/services" element={<BookingFlow />} />
