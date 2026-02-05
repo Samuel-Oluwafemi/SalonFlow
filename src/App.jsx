@@ -4,11 +4,11 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <div className="bg-white mx-auto ">
-          <Routes>
-            <Route path="/" element={<Hero />} />
-            <Route path="/services" element={<BookingFlow />} />
-          </Routes>
+      <div className="max-w-7xl bg-white mx-auto ">
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/services" element={<BookingFlow />} />
+        </Routes>
       </div>
     </>
   );
