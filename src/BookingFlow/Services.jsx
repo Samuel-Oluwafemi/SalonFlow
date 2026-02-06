@@ -8,12 +8,6 @@ const Services = ({
 }) => {
   // Continue btn is enabled only if a service is selected and is available
   const canContinue = Boolean(selectedService);
-  // error logging for debugging
-  if (!canContinue) {
-    console.log("Continue button is disabled");
-  } else {
-    console.log("Continue button is enabled");
-  }
   return (
     <section className="min-h-screen mx-auto py-10 pt-28">
       <Navbar />
@@ -21,7 +15,7 @@ const Services = ({
         Categories of Services
       </h1>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 gap-6 px-2 md:px-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 gap-5 px-2 md:px-10">
         {/* Loop through service categories */}
         {services.map((service) => {
           // for every service, check if it's selected
@@ -31,7 +25,7 @@ const Services = ({
             <button
               key={service.id}
               onClick={() => onSelectedService(service)}
-              className={`p-1 md:p-2 rounded-3xl hover:shadow-lg transition-duration-300 text-center 
+              className={`p-1 mb-3 md:p-2 rounded-3xl hover:shadow-lg transition duration-300 text-center 
                 ${isSelected ? "shadow-lg shadow-purple-400" : "border border-gray-300"}`}
             >
               {/* service image */}
@@ -49,12 +43,16 @@ const Services = ({
           );
         })}
       </div>
-      <div className="flex justify-center px-10 md:px-20">
+      <div className="flex justify-center px-3 md:px-20">
         <button
           disabled={!canContinue}
           onClick={onContinue}
           className={`mt-10 w-100 py-3 rounded-full font-semibold text-lg 
-            ${canContinue ? "bg-purple-500 text-white cursor-pointer" : "bg-gray-300 text-gray-600 cursor-not-allowed"}`}
+            ${
+              canContinue
+                ? "bg-purple-500 text-white cursor-pointer"
+                : "bg-gray-300 text-gray-600 cursor-not-allowed"
+            }`}
         >
           Continue
         </button>
