@@ -36,6 +36,9 @@ const services = [
 
 export default function BookingFlow() {
   const [selectedService, setSelectedService] = useState(null);
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [selectedPhone, setSelectedPhone] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [step, setStep] = useState(1);
@@ -54,12 +57,28 @@ export default function BookingFlow() {
     setStep(2);
   };
 
-  // Handle date and time selection
+  // Handle name input change
+  const handleNameChange = (name) => {
+    setSelectedName(name);
+  };
+
+  // Handle email input change
+  const handleEmailChange = (email) => {
+    setSelectedEmail(email);
+  };
+
+  // Handle phone input change
+  const handlePhoneChange = (phone) => {
+    setSelectedPhone(phone);
+  };
+
+  // Handle date selection
   const handleDateSelection = (date) => {
     setSelectedDate(date);
     setSelectedTime(null); // reset time when date changes
   };
 
+  // Handle time selection
   const handleTimeSelection = (time) => {
     setSelectedTime(time);
   };
@@ -84,6 +103,9 @@ export default function BookingFlow() {
         <DateTimeSelection
           selectedDate={selectedDate}
           selectedTime={selectedTime}
+          selectedName={handleNameChange}
+          selectedEmail={handleEmailChange}
+          selectedPhone={handlePhoneChange}
           onSelectDate={handleDateSelection}
           onSelectTime={handleTimeSelection}
           onContinue={goToDetails}
@@ -93,6 +115,9 @@ export default function BookingFlow() {
       {step === 3 && (
         <CustomerDetails
           selectedService={selectedService}
+          selectedName={selectedName}
+          selectedEmail={selectedEmail}
+          selectedPhone={selectedPhone}
           selectedDate={selectedDate}
           selectedTime={selectedTime}
         />
