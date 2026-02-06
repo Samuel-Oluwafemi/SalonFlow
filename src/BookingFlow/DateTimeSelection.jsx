@@ -73,6 +73,7 @@ const DateTimeSelection = ({
               onChange={(e) => onSelectDate(e.target.value)}
             />
           </label>
+
           {/* time */}
           <label className="font-medium text-sm text-left">
             Select Time
@@ -91,7 +92,8 @@ const DateTimeSelection = ({
             </select>
           </label>
         </div>
-        <div className="">
+        
+        <div>
           <button
             disabled={!canContinue}
             onClick={onContinue}
