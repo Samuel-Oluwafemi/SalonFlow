@@ -103,9 +103,12 @@ export default function BookingFlow() {
         <DateTimeSelection
           selectedDate={selectedDate}
           selectedTime={selectedTime}
-          selectedName={handleNameChange}
-          selectedEmail={handleEmailChange}
-          selectedPhone={handlePhoneChange}
+          selectedName={selectedName}
+          selectedEmail={selectedEmail}
+          selectedPhone={selectedPhone}
+          onSelectName={handleNameChange}
+          onSelectEmail={handleEmailChange}
+          onSelectPhone={handlePhoneChange}
           onSelectDate={handleDateSelection}
           onSelectTime={handleTimeSelection}
           onContinue={goToDetails}
