@@ -15,9 +15,9 @@ const DateTimeSelection = ({
 }) => {
   const canContinue = selectedDate && selectedTime;
   return (
-    <section className="min-h-screen mx-auto py-10 pt-28">
+    <section className="min-h-screen mx-auto md:py-20 py-6 md:pt-28 pt-22">
       <Navbar />
-      <main className="md:px-40 md:py-5  px-10 py-6 max-w-6xl mx-auto">
+      <main className="md:px-40 md:py-5 px-10 py-6 max-w-6xl mx-auto">
         <div className="text-left mb-8">
           <h1 className="text-2xl md:text-3xl font-bold mb-3">
             Complete Your Booking Details
@@ -68,7 +68,7 @@ const DateTimeSelection = ({
             Select Date
             <input
               className="w-full rounded-lg bg-gray-200 cursor-pointer px-3 py-4 mt-3"
-              type="date"
+              type="date" placeholder=""
               value={selectedDate || ""}
               onChange={(e) => onSelectDate(e.target.value)}
             />
@@ -95,7 +95,7 @@ const DateTimeSelection = ({
           <button
             disabled={!canContinue}
             onClick={onContinue}
-            className={`mt-10 w-full py-3 rounded-lg font-semibold text-lg
+            className={`mt-7 w-full py-3 text-sm font-medium rounded-lg font-semibold text-lg
             ${
               canContinue
                 ? "bg-purple-500 text-white cursor-pointer"
