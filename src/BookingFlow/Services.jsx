@@ -6,7 +6,7 @@ const Services = ({
   onSelectedService,
   onContinue,
 }) => {
-  // Continue btn is enabled only if a service is selected and is available
+  // Continue btn is enabled only if a service is selected
   const canContinue = Boolean(selectedService);
   return (
     <section className="min-h-screen mx-auto py-10 pt-28">
