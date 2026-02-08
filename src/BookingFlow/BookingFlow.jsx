@@ -19,7 +19,7 @@ const services = [
     image: "/images/elless braiding2.jpeg",
   },
   {
-    id: "3",
+    id: 3,
     name: "Pedicure & Manicure",
     duration: "1hr",
     price: "#15k",
@@ -43,9 +43,37 @@ export default function BookingFlow() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [step, setStep] = useState(1);
 
+  useEffect(() => {
+    const savedStep = localStorage.getItem("bookingStep");
+    const savedData = localStorage.getItem("bookingData");
+
+    console.log("BookingFlow: restoring from localStorage", { savedStep, savedData });
+
+    if (savedStep) {
+      const n = Number(savedStep);
+      if (Number.isFinite(n) && n >= 1 && n <= 3) setStep(n);
+    }
+
+    if (savedData) {
+      try {
+        const data = JSON.parse(savedData);
+        setSelectedService(data.selectedService || null);
+        setSelectedName(data.selectedName || '');
+        setSelectedEmail(data.selectedEmail || '');
+        setSelectedPhone(data.selectedPhone || '');
+        setSelectedDate(data.selectedDate || null);
+        setSelectedTime(data.selectedTime || null);
+      } catch (err) {
+        console.error('BookingFlow: failed to parse bookingData, clearing corrupt value', err);
+        localStorage.removeItem('bookingData');
+      }
+    }
+  }, []);
+
+
   // Persist booking step and data(selectedService, date/time, phone, email...) in localStorage to prevent loss on page refresh
   useEffect(() => {
-    localStorage.setItem("bookingStep", step);
+    localStorage.setItem("bookingStep", step.toString());
   }, [step]);
 
   useEffect(() => {
@@ -73,14 +101,30 @@ export default function BookingFlow() {
   const handleSelectService = (service) => {
     setSelectedService(service);
 
-    // clear the date and time when a new service is selected
+    // clear all form data when a new service is selected
     setSelectedDate(null);
     setSelectedTime(null);
+    setSelectedName("");
+    setSelectedEmail("");
+    setSelectedPhone("");
   };
 
   // move to the next step
   const goToDateTime = () => {
     setStep(2);
+  };
+
+  // Reset booking flow and clear persisted data
+  const resetBooking = () => {
+    localStorage.removeItem("bookingStep");
+    localStorage.removeItem("bookingData");
+    setStep(1);
+    setSelectedService(null);
+    setSelectedName("");
+    setSelectedEmail("");
+    setSelectedPhone("");
+    setSelectedDate(null);
+    setSelectedTime(null);
   };
 
   // Handle name input change
@@ -113,6 +157,11 @@ export default function BookingFlow() {
     setStep(3);
   };
 
+  // Go back to previous step
+  const goToPreviousStep = () => {
+    if (step > 1) setStep(step - 1);
+  };
+
   return (
     <div>
       {/* only show the serviceSelection when in step 1 */}
@@ -122,6 +171,7 @@ export default function BookingFlow() {
           selectedService={selectedService}
           onSelectedService={handleSelectService}
           onContinue={goToDateTime}
+          onBack={resetBooking}
         />
       )}
       {/* only show the DateTimeSelection + customer details when in step 2 */}
@@ -138,6 +188,7 @@ export default function BookingFlow() {
           onSelectDate={handleDateSelection}
           onSelectTime={handleTimeSelection}
           onContinue={goToDetails}
+          onBack={goToPreviousStep}
         />
       )}
       {/* only show customer details, date/time in step 3*/}
@@ -149,6 +200,7 @@ export default function BookingFlow() {
           selectedPhone={selectedPhone}
           selectedDate={selectedDate}
           selectedTime={selectedTime}
+          onBack={goToPreviousStep}
         />
       )}
     </div>
