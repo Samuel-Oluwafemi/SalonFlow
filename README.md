@@ -1,7 +1,7 @@
 Bookfiy - Salonflow is a booking and scheduling system for service-based businesses(salons, barbers, coaches) to help them manage appointments and get more clients online.
-A simple booking flow that handles: service selection → date/time → customer details → WhatsApp confirmation/localstorage.
+A simple booking flow that handles: service selection → date/time selection → customer details → WhatsApp confirmation/localstorage.
 
-This project is fully built with React and Tailwindcss (no backend yet). 
+This project is fully built with React and Tailwindcss.
 Features are:
 Designing multi-step booking flow.
 Service selection, date/time, user details.
@@ -25,5 +25,5 @@ More than once component needs the data, so the state goes to the parent.
 
 The parent component owns the truth
 The child components only display and reports user actions
-This flow teaches Controlled components and lifting state up which makes it easier to control multi-step flows.
+This flow teaches Controlled components + lifting state up which makes it easier to control multi-step flows.
 
