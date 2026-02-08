@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Services from "./Services";
 import DateTimeSelection from "./DateTimeSelection";
-import CustomerDetails from "./CustomerDetails";
+import Reviews from "./Reviews";
 // Sample services data
 const services = [
   {
@@ -42,6 +42,32 @@ export default function BookingFlow() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [step, setStep] = useState(1);
+
+  // Persist booking step and data(selectedService, date/time, phone, email...) in localStorage to prevent loss on page refresh
+  useEffect(() => {
+    localStorage.setItem("bookingStep", step);
+  }, [step]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "bookingData",
+      JSON.stringify({
+        selectedService,
+        selectedName,
+        selectedEmail,
+        selectedPhone,
+        selectedDate,
+        selectedTime,
+      }),
+    );
+  }, [
+    selectedService,
+    selectedName,
+    selectedEmail,
+    selectedPhone,
+    selectedDate,
+    selectedTime,
+  ]);
 
   // Handle service selection and update the selected service
   const handleSelectService = (service) => {
@@ -98,7 +124,7 @@ export default function BookingFlow() {
           onContinue={goToDateTime}
         />
       )}
-      {/* only show the DateTimeSelection when in step 2 */}
+      {/* only show the DateTimeSelection + customer details when in step 2 */}
       {step === 2 && (
         <DateTimeSelection
           selectedDate={selectedDate}
@@ -116,7 +142,7 @@ export default function BookingFlow() {
       )}
       {/* only show customer details, date/time in step 3*/}
       {step === 3 && (
-        <CustomerDetails
+        <Reviews
           selectedService={selectedService}
           selectedName={selectedName}
           selectedEmail={selectedEmail}
