@@ -27,3 +27,9 @@ The parent component owns the truth
 The child components only display and reports user actions
 This flow teaches Controlled components + lifting state up which makes it easier to control multi-step flows.
 
+A solid booking flow with:
+localStorage persistence with validation
+Service selection with form reset
+Multi-step navigation with back buttons
+Direct WhatsApp integration with formatted messages
+
