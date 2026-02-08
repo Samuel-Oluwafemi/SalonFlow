@@ -5,6 +5,7 @@ const Services = ({
   selectedService,
   onSelectedService,
   onContinue,
+  onBack = () => {},
 }) => {
   // Continue btn is enabled only if a service is selected
   const canContinue = Boolean(selectedService);
@@ -43,11 +44,17 @@ const Services = ({
           );
         })}
       </div>
-      <div className="flex justify-center px-3 md:px-20">
+      <div className="flex justify-center md:gap-200 gap-3 px-3">
+        <button 
+          onClick={onBack}
+          className="md:w-50 w-full py-1 mt-10 text-md rounded-lg font-semibold 
+            bg-gray-300 text-gray-700 cursor-pointer hover:bg-gray-400 transition duration-300">
+          Back
+        </button>
         <button
           disabled={!canContinue}
           onClick={onContinue}
-          className={`mt-10 w-100 py-3 rounded-full font-semibold text-lg 
+          className={`mt-10 md:w-50 w-full py-3 rounded-lg font-semibold text-lg 
             ${
               canContinue
                 ? "bg-purple-500 text-white cursor-pointer"
