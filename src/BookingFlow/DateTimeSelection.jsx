@@ -109,7 +109,7 @@ const DateTimeSelection = ({
             ${
               canContinue
                 ? "bg-purple-500 text-white cursor-pointer hover:bg-purple-600 transition"
-                : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-gray-300 text-gray-600 cursor-not-allowed hover:bg-gray-300"
             }`}
           >
             Continue
