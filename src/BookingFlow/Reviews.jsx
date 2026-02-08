@@ -8,10 +8,31 @@ const Reviews = ({
   selectedTime,
   onBack = () => {},
 }) => {
+  // Get current time to determine greeting
+  let greeting = "";
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    greeting = "Good morning";
+  } else if (hour >= 12 && hour <= 16) {
+    greeting = "Good afternoon";
+  } else {
+    greeting = "Good evening";
+  }
+  // Handle confirm booking - open WhatsApp with pre-filled message
+  const handleConfirm = () => {
+    const name = selectedName ?? "N/A";
+    const phone = selectedPhone ?? "N/A";
+    const message = `I want to book ${selectedService?.name ?? "a service"} on ${selectedDate ?? "N/A"} at ${selectedTime ?? "N/A"}.`;
+    const text = `Hello, ${greeting}. My name is ${name}. My phone number is ${phone}. ${message}`;
+    const whatsappNumber = "2348102409849"; // replace with your WhatsApp number
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section className="min-h-screen mx-auto py-10 pt-28">
       <Navbar />
-      <main className="md:px-30 px-3 max-w-6xl mx-auto">
+      <main className="md:px-30 md:px-3 px-4 max-w-6xl mx-auto">
         <h1 className="text-2xl md:text-3xl text-center font-bold mb-8">
           Review Your Booking Details
         </h1>
@@ -38,18 +59,18 @@ const Reviews = ({
             <span className="font-medium">Phone:</span> {selectedPhone}
           </p>
         </div>
-        <div className="flex gap-3 justify-center mt-10">
+        <div className="flex gap-5 justify-center mt-10">
           <button
             onClick={onBack}
-            className="bg-gray-300 text-gray-700 px-6 py-3 rounded-full 
+            className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg 
             font-semibold text-lg hover:bg-gray-400 transition duration-300 
             cursor-pointer"
           >
             Back
           </button>
           <button
-            onClick={() => alert("Booking Confirmed!")}
-            className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold 
+            onClick={handleConfirm}
+            className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold 
           text-lg hover:bg-green-600 transition duration-300"
           >
             Confirm Booking
