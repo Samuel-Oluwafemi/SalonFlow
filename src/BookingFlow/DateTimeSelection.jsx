@@ -1,7 +1,7 @@
 import { Navbar } from "../Navbar/Navbar";
 const DateTimeSelection = ({
   // props
-  selectedName = "",
+  selectedName = "", 
   selectedEmail = "",
   selectedPhone = "",
   selectedDate = "",
@@ -12,8 +12,9 @@ const DateTimeSelection = ({
   onSelectDate = () => {},
   onSelectTime = () => {},
   onContinue = () => {},
+  onBack = () => {},
 }) => {
-  const canContinue = selectedDate && selectedTime;
+  const canContinue = Boolean(selectedName && selectedEmail && selectedPhone && selectedDate && selectedTime);
   return (
     <section className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-22">
       <Navbar />
@@ -93,14 +94,21 @@ const DateTimeSelection = ({
           </label>
         </div>
 
-        <div>
+        <div className="flex gap-3 mt-7">
+          <button
+            onClick={onBack}
+            className="md:w-50 w-full py-3 text-md font-medium rounded-lg font-semibold 
+            bg-gray-300 text-gray-700 cursor-pointer hover:bg-gray-400 transition cursor-pointer"
+          >
+            Back
+          </button>
           <button
             disabled={!canContinue}
             onClick={onContinue}
-            className={`mt-7 md:w-50 w-full py-3 text-md font-medium rounded-lg font-semibold 
+            className={`md:w-50 w-full py-3 text-md font-medium rounded-lg font-semibold 
             ${
               canContinue
-                ? "bg-purple-500 text-white cursor-pointer"
+                ? "bg-purple-500 text-white cursor-pointer hover:bg-purple-600 transition"
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
             }`}
           >
