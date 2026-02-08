@@ -6,6 +6,7 @@ const Reviews = ({
   selectedPhone,
   selectedDate,
   selectedTime,
+  onBack = () => {},
 }) => {
   return (
     <section className="min-h-screen mx-auto py-10 pt-28">
@@ -37,7 +38,15 @@ const Reviews = ({
             <span className="font-medium">Phone:</span> {selectedPhone}
           </p>
         </div>
-        <div className="flex justify-center mt-10">
+        <div className="flex gap-3 justify-center mt-10">
+          <button
+            onClick={onBack}
+            className="bg-gray-300 text-gray-700 px-6 py-3 rounded-full 
+            font-semibold text-lg hover:bg-gray-400 transition duration-300 
+            cursor-pointer"
+          >
+            Back
+          </button>
           <button
             onClick={() => alert("Booking Confirmed!")}
             className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold 
