@@ -5,8 +5,8 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <nav
-      className="fixed top-0 bg-transparent border-b border-white/30 md:border-white/20 shadow-[0_5px_20px_rgba(0,0,0,0.1)]
-     backdrop-blur-md md:backdrop-blur-md w-full z-50 py-6 px-6 md:py-4 md:px-10"
+      className="fixed top-0 bg-transparent border-b border-white/30 md:border-white/20 
+     backdrop-blur-md md:backdrop-blur-md w-full z-50 py-6 px-6 md:py-5 md:px-15"
     >
       <div className="flex items-center justify-between">
         {/* Logo Left */}
@@ -23,10 +23,11 @@ export function Navbar() {
           </Link>
         </main>
 
-        {/* Navs right */}
+        {/* Navs middle */}
+        <div className="hidden md:block">
         <ul
           data-aos="fade-left"
-          className="hidden md:flex space-x-6 text-black text-md font-semibold gap-4"
+          className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4"
         >
           <a href="#home">
             <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
@@ -36,11 +37,6 @@ export function Navbar() {
           <a href="#services">
             <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
               Services
-            </li>
-          </a>
-          <a href="#packages">
-            <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
-              Packages
             </li>
           </a>
           <a href="#reviews">
@@ -54,6 +50,18 @@ export function Navbar() {
             </li>
           </a>
         </ul>
+        </div>  
+
+        {/* Navs right */}
+        <a
+          href=""
+          target="_blank"
+          className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
+          rounded-lg font-semibold hover:text-white hover:bg-purple-700 transition duration-300 cursor-pointer
+          " 
+        >
+          Book a Demo
+        </a>
 
         <button
           onClick={() => setOpen(!open)}
@@ -66,7 +74,8 @@ export function Navbar() {
       {open && (
         <div
           data-aos="fade-up"
-          className="md:hidden bg-black/80 rounded-lg p-4 flex flex-col text-bold text-md text-white gap-8 items-center mt-8 md:mt-3"
+          className="md:hidden bg-black/80 rounded-lg p-4 flex flex-col text-bold 
+          text-md text-white gap-8 items-center mt-8 md:mt-3"
         >
           <a href="#home" className="cursor-pointer hover:text-fuchsia-500">
             Home
@@ -95,10 +104,11 @@ export function Navbar() {
           <a
             href="https://wa.me/+2348103251749"
             target="_blank"
-            className="cursor-pointer inline bg-fuchsia-700 w-full text-center rounded-full py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
+            className="cursor-pointer inline bg-fuchsia-700 w-full text-center rounded-full 
+            py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
           >
-            Book Now
+            Book a Demo
           </a>
         </div>
       )}
