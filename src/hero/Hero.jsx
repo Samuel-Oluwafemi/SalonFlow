@@ -6,23 +6,36 @@ export default function Hero() {
   return (
     <section>
       <Navbar />
-      <div className="min-h-screen bg-white pt-28 text-center">
-        <h1 className="text-4xl md:text-6xl md:mt-4 font-bold text-black mb-6 px-14 md:px-23">
-          A Smarter Way for Brands to Manage Appointments
-        </h1>
-        <p className="text-lg text-gray-700 mb-6 md:text-xl px-5 md:px-0">
-          Designed to help brands manage bookings, save time, and never miss
-          appointments.
-        </p>
-        <Link to="/services">
-          <button
-            className="bg-purple-600 text-white px-6 py-3 rounded-md text-lg 
-          font-semibold hover:bg-purple-700 transition duration-300 mb-3"
+      <div className="min-h-screen bg-white md:pt-35 pt-20 text-center">
+        <main className="flex md:flex-row flex-col md:gap-20 gap-10 justify-center">
+          <div
+            style={{
+              fontFamily: "math",
+            }}
+            className="px-5 mt-10 md:text-left text-center"
           >
-            Book a Demo
-          </button>
-        </Link>
-        <Img />
+            <p className="md:text-sm md:block text-xs text-gray-400 mb-2 hidden font-semibold">
+              Happy Customer with our services
+            </p>
+            <h1 className="text-4xl md:text-5xl md:mt-4 font-bold text-black md:mb-4 mb-4">
+              A Smarter Way for Brands <br /> to Manage{" "}
+              <span className="text-purple-500">Appointments.</span>
+            </h1>
+            <p className="text-md text-gray-400 mb-6 md:text-lg px-6 md:px-0">
+              Designed to help brands manage bookings, save time, <br /> and
+              never miss appointments.
+            </p>
+            <Link to="/services">
+              <button
+                className="bg-purple-600 text-white px-6 py-3 rounded-md text-lg 
+          font-semibold hover:bg-purple-700 transition duration-300 mb-3 cursor-pointer"
+              >
+                Book a Demo
+              </button>
+            </Link>
+          </div>
+          <Img />
+        </main>
       </div>
     </section>
   );
