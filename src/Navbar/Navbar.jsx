@@ -11,7 +11,6 @@ export function Navbar() {
       <div className="flex items-center justify-between">
         {/* Logo Left */}
         <main
-          data-aos="fade-right"
           // set the classname to hide when open is true and show when open is false
           className={`flex gap-1 text-2xl md:text-2xl cursor-pointer font-playfair font-bold text-black`}
         >
@@ -26,7 +25,6 @@ export function Navbar() {
         {/* Navs middle */}
         <div className="hidden md:block">
         <ul
-          data-aos="fade-left"
           className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4"
         >
           <a href="#home">
@@ -57,7 +55,7 @@ export function Navbar() {
           href=""
           target="_blank"
           className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
-          rounded-lg font-semibold hover:text-white hover:bg-purple-700 transition duration-300 cursor-pointer
+          rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
           " 
         >
           Book a Demo

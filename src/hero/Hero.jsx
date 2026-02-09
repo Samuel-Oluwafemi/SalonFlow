@@ -6,8 +6,8 @@ export default function Hero() {
   return (
     <section>
       <Navbar />
-      <div className="min-h-screen bg-white md:pt-35 pt-20 text-center">
-        <main className="flex md:flex-row flex-col md:gap-20 gap-10 justify-center">
+      <div className="min-h-screen bg-white md:pt-35 pt-19  text-center">
+        <main className="flex md:flex-row flex-col md:gap-30 gap-10 justify-center">
           <div
             style={{
               fontFamily: "math",

@@ -22,7 +22,8 @@ const Reviews = ({
   const handleConfirm = () => {
     const name = selectedName ?? "N/A";
     const phone = selectedPhone ?? "N/A";
-    const message = `I want to book ${selectedService?.name ?? "a service"} on ${selectedDate ?? "N/A"} at ${selectedTime ?? "N/A"}.`;
+    const message = `I want to book ${selectedService?.name ?? "a service"} 
+    on ${selectedDate ?? "N/A"} at ${selectedTime ?? "N/A"}.`;
     const text = `Hello, ${greeting}. My name is ${name}. My phone number is ${phone}. ${message}`;
     const whatsappNumber = "2348102409849"; // replace with your WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -30,7 +31,7 @@ const Reviews = ({
   };
 
   return (
-    <section className="min-h-screen mx-auto py-10 pt-28">
+    <section className="min-h-screen mx-auto py-10 md:pt-28">
       <Navbar />
       <main className="md:px-30 md:px-3 px-4 max-w-6xl mx-auto">
         <h1 className="text-2xl md:text-3xl text-center font-bold mb-8">

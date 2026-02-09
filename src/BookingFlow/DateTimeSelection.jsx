@@ -16,7 +16,7 @@ const DateTimeSelection = ({
 }) => {
   const canContinue = Boolean(selectedName && selectedEmail && selectedPhone && selectedDate && selectedTime);
   return (
-    <section className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-22">
+    <section className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-20">
       <Navbar />
       <main className="md:px-30 md:py-5 px-7 py-6 max-w-6xl mx-auto">
         <div className="text-left mb-8">
