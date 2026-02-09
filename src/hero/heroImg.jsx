@@ -1,9 +1,9 @@
 export function Img() {
   return (
-    <div>
+    <div className="">
       <img
-        className="mx-auto px-6 md:h-screen"
-        src="business-mission-animate (1).svg"
+        className="mx-auto h-100 rounded-xl"
+        src="/images/elless Tooth Gem.jpeg"
         alt="hero-img"
       />
     </div>
