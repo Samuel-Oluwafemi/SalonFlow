@@ -3,7 +3,7 @@ import BookingFlow from "./BookingFlow/BookingFlow";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 function App() {
-   const location = useLocation()
+  const location = useLocation();
   return (
     <>
       <div className="max-w-7xl bg-white mx-auto ">

@@ -1,4 +1,5 @@
 import { Navbar } from "../Navbar/Navbar";
+import { Features } from "./Features";
 import { Img } from "./heroImg";
 import { Link } from "react-router-dom";
 
@@ -9,10 +10,7 @@ export default function Hero() {
       <div className="min-h-screen bg-white md:pt-35 pt-19 text-center">
         <main className="flex md:flex-row flex-col md:gap-30 gap-10 justify-center">
           <div
-            style={{
-              fontFamily: "math",
-            }}
-            className="px-5 mt-10 md:text-left text-center"
+            className="font-inter px-5 mt-10 md:text-left text-center"
           >
             <p className="md:text-sm md:block text-xs text-gray-400 mb-2 hidden font-semibold">
               Happy Customer with our services
@@ -37,6 +35,7 @@ export default function Hero() {
           <Img />
         </main>
       </div>
+      <Features />
     </section>
   );
 }
