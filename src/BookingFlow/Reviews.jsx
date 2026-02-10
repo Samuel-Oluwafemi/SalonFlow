@@ -31,9 +31,9 @@ const Reviews = ({
   };
 
   return (
-    <section className="min-h-screen mx-auto py-10 md:pt-28">
+    <section className="min-h-screen mx-auto py-10 md:pt-28 pt-28">
       <Navbar />
-      <main className="md:px-30 md:px-3 px-4 max-w-6xl mx-auto">
+      <main className="md:px-30 md:px-3 text-center px-4 max-w-6xl mx-auto">
         <h1 className="text-2xl md:text-3xl text-center font-bold mb-8">
           Review Your Booking Details
         </h1>

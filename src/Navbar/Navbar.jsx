@@ -5,10 +5,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <nav
-      className="fixed top-0 bg-transparent border-b border-white/30 md:border-white/20 
-     backdrop-blur-md md:backdrop-blur-md w-full z-50 py-6 px-6 md:py-5 md:px-15"
+      className="fixed pt-6 bg-transparent backdrop-filter
+     backdrop-blur-md w-full z-50 py-6 px-6 md:py-5 md:px-15"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between rounded-full">
         {/* Logo Left */}
         <main
           // set the classname to hide when open is true and show when open is false
