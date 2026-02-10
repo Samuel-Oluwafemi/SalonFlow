@@ -5,10 +5,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <nav
-      className="fixed pt-6 bg-transparent backdrop-filter
+      className="fixed top-0 bg-transparent backdrop-filter
      backdrop-blur-md w-full z-50 py-6 px-6 md:py-5 md:px-15"
     >
-      <div className="flex items-center justify-between rounded-full">
+      <div className="flex items-center justify-between rounded-full ">
         {/* Logo Left */}
         <main
           // set the classname to hide when open is true and show when open is false
@@ -16,39 +16,37 @@ export function Navbar() {
         >
           <div className="mt-4"></div>
           <Link to="/">
-          <div className="flex">
-          <Boxes className="size-8 text-purple-600" /> SalonFlow
-          </div>
+            <div className="flex">
+              <Boxes className="size-8 text-purple-600" /> SalonFlow
+            </div>
           </Link>
         </main>
 
         {/* Navs middle */}
         <div className="hidden md:block">
-        <ul
-          className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4"
-        >
-          <Link to="/">
-            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-              Home
-            </li>
+          <ul className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4">
+            <Link to="/">
+              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                Home
+              </li>
             </Link>
-            <Link to={'/services'}>
-            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-              Services
-            </li>
-            </Link>
-          <a href="#reviews">
-            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-              Reviews
-            </li>
-          </a>
-          <a href="#contact">
-            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-              Contact
-            </li>
-          </a>
-        </ul>
-        </div>  
+            <a href="#features">
+              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                Features
+              </li>
+            </a>
+            <a href="#reviews">
+              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                Reviews
+              </li>
+            </a>
+            <a href="#contact">
+              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                Contact
+              </li>
+            </a>
+          </ul>
+        </div>
 
         {/* Navs right */}
         <a
@@ -56,7 +54,7 @@ export function Navbar() {
           target="_blank"
           className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
           rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
-          " 
+          "
         >
           Book a Demo
         </a>
@@ -76,14 +74,17 @@ export function Navbar() {
           text-md text-white gap-8 items-center mt-8 md:mt-3"
         >
           <Link to="/">
-          <li href="#home" className="cursor-pointer hover:text-purple-500">
-            Home
-          </li>
+            <li href="#home" className="cursor-pointer hover:text-purple-500">
+              Home
+            </li>
           </Link>
-          <Link to={'/services'}>
-          <li href="#services" className="cursor-pointer hover:text-purple-500">
-            Services
-          </li>
+          <Link to={"/services"}>
+            <li
+              href="#services"
+              className="cursor-pointer hover:text-purple-500"
+            >
+              Services
+            </li>
           </Link>
           <li
             href="#packages"
