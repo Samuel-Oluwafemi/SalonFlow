@@ -27,23 +27,23 @@ export function Navbar() {
         <ul
           className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4"
         >
-          <a href="#home">
-            <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
+          <Link to="/">
+            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
               Home
             </li>
-          </a>
-          <a href="#services">
-            <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
+            </Link>
+            <Link to={'/services'}>
+            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
               Services
             </li>
-          </a>
+            </Link>
           <a href="#reviews">
-            <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
+            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
               Reviews
             </li>
           </a>
           <a href="#contact">
-            <li className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500">
+            <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
               Contact
             </li>
           </a>
@@ -70,45 +70,49 @@ export function Navbar() {
         </button>
       </div>
       {open && (
-        <div
+        <ul
           data-aos="fade-up"
           className="md:hidden bg-black/80 rounded-lg p-4 flex flex-col text-bold 
           text-md text-white gap-8 items-center mt-8 md:mt-3"
         >
-          <a href="#home" className="cursor-pointer hover:text-fuchsia-500">
+          <Link to="/">
+          <li href="#home" className="cursor-pointer hover:text-purple-500">
             Home
-          </a>
-          <a href="#services" className="cursor-pointer hover:text-fuchsia-500">
+          </li>
+          </Link>
+          <Link to={'/services'}>
+          <li href="#services" className="cursor-pointer hover:text-purple-500">
             Services
-          </a>
-          <a
+          </li>
+          </Link>
+          <li
             href="#packages"
-            className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500"
+            className="cursor-pointer hover:text-purple-500 active:purple-500"
           >
             Packages
-          </a>
-          <a
+          </li>
+          <li
             href="#reviews"
-            className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500"
+            className="cursor-pointer hover:text-purple-500 active:purple-500"
           >
             Reviews
-          </a>
-          <a
+          </li>
+          <li
             href="#contact"
-            className="cursor-pointer hover:text-fuchsia-500 active:fuchsia-500"
+            className="cursor-pointer hover:text-purple-500 active:purple-500"
           >
             Contact
-          </a>
+          </li>
           <a
             href="https://wa.me/+2348103251749"
             target="_blank"
-            className="cursor-pointer inline bg-fuchsia-700 w-full text-center rounded-full 
+            className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
           >
             Book a Demo
           </a>
-        </div>
+        </ul>
       )}
     </nav>
   );

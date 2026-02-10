@@ -10,13 +10,14 @@ const Services = ({
   // Continue btn is enabled only if a service is selected
   const canContinue = Boolean(selectedService);
   return (
-    <section className="min-h-screen mx-auto py-10 pt-28">
+    <section className="min-h-screen mx-auto py-10 md:pt-33 pt-28">
       <Navbar />
-      <h1 className="text-2xl md:text-3xl text-center font-bold mb-8">
-        Categories of Services
+      <h1 className="text-2xl md:text-2xl text-center font-bold mb-8">
+        Select a Service to Book
       </h1>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-4 gap-5 px-2 md:px-10">
+      <div style={{fontFamily: 'math'}}>
+      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-8 gap-5 px-2 md:px-10">
         {/* Loop through service categories */}
         {services.map((service) => {
           // for every service, check if it's selected
@@ -63,6 +64,7 @@ const Services = ({
         >
           Continue
         </button>
+      </div>
       </div>
     </section>
   );
