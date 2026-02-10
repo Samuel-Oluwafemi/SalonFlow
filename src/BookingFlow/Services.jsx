@@ -1,4 +1,5 @@
 import { Navbar } from "../Navbar/Navbar";
+import { motion } from "framer-motion"
 const Services = ({
   // props
   services,
@@ -10,7 +11,13 @@ const Services = ({
   // Continue btn is enabled only if a service is selected
   const canContinue = Boolean(selectedService);
   return (
-    <section className="min-h-screen mx-auto py-10 md:pt-33 pt-28">
+    <motion.section
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.6 }}
+ 
+    className="min-h-screen mx-auto py-10 md:pt-33 pt-28">
       <Navbar />
       <h1 className="text-2xl md:text-2xl text-center font-bold mb-8">
         Select a Service to Book
@@ -69,7 +76,7 @@ const Services = ({
           </button>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 export default Services;

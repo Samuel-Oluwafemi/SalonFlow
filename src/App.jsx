@@ -6,7 +6,7 @@ function App() {
   const location = useLocation();
   return (
     <>
-      <div className="max-w-7xl bg-white mx-auto ">
+      <div className="max-w-7xl font-poppins bg-white mx-auto ">
         <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route

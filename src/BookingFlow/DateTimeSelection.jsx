@@ -1,4 +1,5 @@
 import { Navbar } from "../Navbar/Navbar";
+import { motion } from "framer-motion"
 const DateTimeSelection = ({
   // props
   selectedName = "", 
@@ -16,7 +17,12 @@ const DateTimeSelection = ({
 }) => {
   const canContinue = Boolean(selectedName && selectedEmail && selectedPhone && selectedDate && selectedTime);
   return (
-    <section className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-20">
+    <motion.section 
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -30 }}
+    transition={{ duration: 0.6 }}
+    className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-20">
       <Navbar />
       <main className="md:px-30 md:py-5 px-7 py-6 max-w-6xl mx-auto">
         <div className="text-left mb-8">
@@ -116,7 +122,7 @@ const DateTimeSelection = ({
           </button>
         </div>
       </main>
-    </section>
+    </motion.section>
   );
 };
 export default DateTimeSelection;
