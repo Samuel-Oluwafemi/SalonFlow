@@ -1,4 +1,5 @@
 import { Navbar } from "../Navbar/Navbar";
+import { motion } from "framer-motion";
 const Reviews = ({
   selectedService,
   selectedName,
@@ -38,7 +39,12 @@ const Reviews = ({
           Review Your Booking Details
         </h1>
         {/* Service details */}
-        <div className="max-w-4xl mx-auto bg-gray-100 shadow-md rounded-lg py-8 px-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="max-w-4xl mx-auto bg-gray-100 shadow-md rounded-lg py-8 px-6"
+        >
           <h2 className="text-xl font-semibold mb-4">Service Details</h2>
           <p className="mb-2">
             <span className="font-medium">Service:</span> {selectedService.name}
@@ -59,23 +65,28 @@ const Reviews = ({
           <p className="mb-2">
             <span className="font-medium">Phone:</span> {selectedPhone}
           </p>
-        </div>
-        <div className="flex gap-5 justify-center mt-10">
-          <button
+        </motion.div>
+        <div className="flex gap-10 justify-center mt-10">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onBack}
             className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg 
             font-semibold text-lg hover:bg-gray-400 transition duration-300 
             cursor-pointer"
           >
             Back
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleConfirm}
-            className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold 
-          text-lg hover:bg-green-600 transition duration-300"
+            className="bg-green-500 text-white px-6 py-3 rounded-lg 
+            font-semibold text-lg hover:bg-green-600 transition duration-300
+            cursor-pointer"
           >
             Confirm Booking
-          </button>
+          </motion.button>
         </div>
       </main>
     </section>

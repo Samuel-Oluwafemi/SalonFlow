@@ -1,5 +1,5 @@
 import { Navbar } from "../Navbar/Navbar";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 const Services = ({
   // props
   services,
@@ -10,14 +10,18 @@ const Services = ({
 }) => {
   // Continue btn is enabled only if a service is selected
   const canContinue = Boolean(selectedService);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0 },
+  };
   return (
     <motion.section
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.6 }}
- 
-    className="min-h-screen mx-auto py-10 md:pt-33 pt-28">
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      transition={{ staggerChildren: 0.15 }}
+      className="min-h-screen mx-auto py-10 md:pt-33 pt-28"
+    >
       <Navbar />
       <h1 className="text-2xl md:text-2xl text-center font-bold mb-8">
         Select a Service to Book
@@ -31,9 +35,12 @@ const Services = ({
             const isSelected = selectedService?.id === service.id;
 
             return (
-              <button
+              <motion.button
                 key={service.id}
                 onClick={() => onSelectedService(service)}
+                variants={cardVariants}
+                whileHover={{ y: -6, scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 250 }}
                 className={`p-1 mb-3 md:p-2 rounded-3xl hover:shadow-lg transition duration-300 text-center 
                 ${isSelected ? "shadow-lg shadow-purple-400" : "border border-gray-300"}`}
               >
@@ -48,21 +55,25 @@ const Services = ({
                 <div className="p-2">
                   <p className="text-lg font-semibold mb-2">{service.name}</p>
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
         <div className="flex justify-center md:gap-20 gap-3 px-3">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onBack}
             className="md:w-50 w-full py-1 mt-10 text-md rounded-xl font-semibold 
             bg-gray-300 text-gray-700 cursor-pointer hover:bg-gray-400 transition duration-300"
           >
             Back
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             disabled={!canContinue}
             onClick={onContinue}
             className={`mt-10 md:w-50 w-full py-3 rounded-xl font-semibold text-lg 
@@ -73,7 +84,7 @@ const Services = ({
             }`}
           >
             Continue
-          </button>
+          </motion.button>
         </div>
       </div>
     </motion.section>

@@ -1,8 +1,8 @@
 import { Navbar } from "../Navbar/Navbar";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 const DateTimeSelection = ({
   // props
-  selectedName = "", 
+  selectedName = "",
   selectedEmail = "",
   selectedPhone = "",
   selectedDate = "",
@@ -15,14 +15,21 @@ const DateTimeSelection = ({
   onContinue = () => {},
   onBack = () => {},
 }) => {
-  const canContinue = Boolean(selectedName && selectedEmail && selectedPhone && selectedDate && selectedTime);
+  const canContinue = Boolean(
+    selectedName &&
+    selectedEmail &&
+    selectedPhone &&
+    selectedDate &&
+    selectedTime,
+  );
   return (
-    <motion.section 
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -30 }}
-    transition={{ duration: 0.6 }}
-    className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-20">
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen mx-auto md:py-20 py-6 md:pt-22 pt-20"
+    >
       <Navbar />
       <main className="md:px-30 md:py-5 px-7 py-6 max-w-6xl mx-auto">
         <div className="text-left mb-8">
@@ -75,7 +82,8 @@ const DateTimeSelection = ({
             Select Date
             <input
               className="w-full rounded-lg bg-gray-200 cursor-pointer px-3 py-4 mt-3"
-              type="date" placeholder=""
+              type="date"
+              placeholder=""
               value={selectedDate || ""}
               onChange={(e) => onSelectDate(e.target.value)}
             />
@@ -100,15 +108,19 @@ const DateTimeSelection = ({
           </label>
         </div>
 
-        <div className="flex gap-3 mt-7">
-          <button
+        <div className="flex gap-5 mt-7">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onBack}
             className="md:w-50 w-full py-3 text-md font-medium rounded-lg font-semibold 
             bg-gray-300 text-gray-700 cursor-pointer hover:bg-gray-400 transition cursor-pointer"
           >
             Back
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             disabled={!canContinue}
             onClick={onContinue}
             className={`md:w-50 w-full py-3 text-md font-medium rounded-lg font-semibold 
@@ -119,7 +131,7 @@ const DateTimeSelection = ({
             }`}
           >
             Continue
-          </button>
+          </motion.button>
         </div>
       </main>
     </motion.section>
