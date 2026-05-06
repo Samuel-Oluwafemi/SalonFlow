@@ -1,5 +1,10 @@
+import {db} from "../firebase"; // my database
+import { collection, addDoc } from "firebase/firestore"; // collection -> where data is stored, addDoc-> function to save data.
 import { Navbar } from "../Navbar/Navbar";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import { useState } from "react";
+
 const Reviews = ({
   selectedService,
   selectedName,
@@ -9,6 +14,10 @@ const Reviews = ({
   selectedTime,
   onBack = () => {},
 }) => {
+
+  const [isSending, setIsSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
   // Get current time to determine greeting
   let greeting = "";
   const hour = new Date().getHours();
@@ -19,8 +28,51 @@ const Reviews = ({
   } else {
     greeting = "Good evening";
   }
+
+  const handleConfirm = async () => {
+    setIsSending(true);
+
+    // create booking data object to save to Firestore and send via EmailJS
+    const bookingData = {
+      service: selectedService?.name ?? "N/A",
+      name: selectedName,
+      email: selectedEmail,
+      phone: selectedPhone,
+      date: selectedDate,
+      time: selectedTime,
+      createdAt: new Date()
+    };
+    try {
+      // STEP 1: Save to firebase first
+      await addDoc(collection(db, 'bookings'), bookingData);
+      console.log("Booking saved to Firestore:", bookingData);
+
+
+
+      // STEP 2: Send confirmation email to customer via EmailJS
+      await emailjs.send(
+        'service_8noa3te', // replace with your EmailJS service ID
+        'template_7yyjbca', // replace with your EmailJS template ID
+        {
+          customer_name: selectedName,
+          customer_email: selectedEmail,
+          service_name: selectedService?.name ?? 'N/A',
+          booking_date: selectedDate,
+          booking_time: selectedTime,
+          customer_phone: selectedPhone,
+        },
+        'AbT-uDvQJ20dCkqSz' // replace with your EmailJS public key
+      );
+
+      setSent(true);
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      // Even if email fails still redirect to WhatsApp
+
+  } finally {
+      setIsSending(false)
+
   // Handle confirm booking - open WhatsApp with pre-filled message
-  const handleConfirm = () => {
     const name = selectedName ?? "N/A";
     const phone = selectedPhone ?? "N/A";
     const message = `I want to book ${selectedService?.name ?? "a service"} 
@@ -29,7 +81,8 @@ const Reviews = ({
     const whatsappNumber = "2348102409849"; // replace with your WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, "_blank");
-  };
+  }
+};
 
   return (
     <section className="min-h-screen mx-auto py-10 md:pt-28 pt-28">
@@ -55,6 +108,7 @@ const Reviews = ({
           <p className="mb-2">
             <span className="font-medium">Time:</span> {selectedTime}
           </p>
+          <p className="bg-gray-300 h-[1px]"></p>
           <h2 className="text-xl font-semibold mt-6 mb-4">Your Details</h2>
           <p className="mb-2">
             <span className="font-medium">Name:</span> {selectedName}
@@ -63,7 +117,7 @@ const Reviews = ({
             <span className="font-medium">Email:</span> {selectedEmail}
           </p>
           <p className="mb-2">
-            <span className="font-medium">Phone:</span> {selectedPhone}
+            <span className="font-medium">Phone No:</span> {selectedPhone}
           </p>
         </motion.div>
         <div className="flex gap-10 justify-center mt-10">
@@ -81,13 +135,19 @@ const Reviews = ({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleConfirm}
+            disabled={isSending}
             className="bg-green-500 text-white px-6 py-3 rounded-lg 
             font-semibold text-lg hover:bg-green-600 transition duration-300
-            cursor-pointer"
+            cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Confirm Booking
+            {isSending ? 'Sending...' : 'Confirm Booking'}
           </motion.button>
         </div>
+         {sent && (
+          <p className="mt-6 text-green-600 font-medium">
+            Confirmation email sent successfully.
+          </p>
+        )}
       </main>
     </section>
   );

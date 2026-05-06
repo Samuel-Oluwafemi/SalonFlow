@@ -10,11 +10,15 @@ const AdminBookings = () => {
     const fetchBookings = async () => {
       const bookingsCollection = collection(db, "bookings");
       const bookingsSnapshot = await getDocs(bookingsCollection);
-    //   map through the snapshot to create an array of booking objects with their data and ID
+      //   map through the snapshot to create an array of booking objects with their data and ID
       const bookingsList = bookingsSnapshot.docs.map((doc) => ({
         id: doc.id, // include document ID for potential future use (e.g., deletion, updates)
         ...doc.data(), // spread the document data into the booking object
       }));
+
+      bookingsList.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      );
       setBookings(bookingsList);
     };
 
@@ -45,6 +49,10 @@ const AdminBookings = () => {
             </p>
             <p>
               <strong>Time:</strong> {booking.time}
+            </p>
+            <p>
+              <strong>Created At:</strong>{" "}
+              {booking.createdAt?.toDate().toLocaleString()}
             </p>
           </div>
         ))}
