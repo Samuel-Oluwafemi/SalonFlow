@@ -1,13 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { Import } from "lucide-react";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyByj-m5iLViN1iOhnL9uN6HguwlVfbkM-U",
-  authDomain: "salonflow-bookify.firebaseapp.com",
-  projectId: "salonflow-bookify",
-  storageBucket: "salonflow-bookify.firebasestorage.app",
-  messagingSenderId: "301352343617",
-  appId: "1:301352343617:web:b3615d37429008828d8ec0"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
