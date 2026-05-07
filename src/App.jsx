@@ -1,5 +1,6 @@
 import Hero from "./hero/Hero";
 import BookingFlow from "./BookingFlow/BookingFlow";
+import Dashboard from "./admin/Dashboard";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 function App() {
@@ -36,6 +37,20 @@ function App() {
               </motion.div>
             }
           />
+
+          <Route 
+          path="/dashboard"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Dashboard />
+            </motion.div>
+          }
+        />
         </Routes>
       </AnimatePresence>
       </div>
