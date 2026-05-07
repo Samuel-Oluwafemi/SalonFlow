@@ -49,7 +49,8 @@ export function Navbar() {
         </div>
 
         {/* Navs right */}
-        <Link to={"/services"}
+        <Link
+          to={"/services"}
           target="_blank"
           className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
           rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
@@ -102,7 +103,8 @@ export function Navbar() {
               Dashboard
             </li>
           </Link>
-          <Link to={"/services"}
+          <Link
+            to={"/services"}
             target="_blank"
             className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black

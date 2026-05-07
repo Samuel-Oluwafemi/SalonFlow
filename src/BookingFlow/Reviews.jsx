@@ -1,4 +1,4 @@
-import {db} from "../firebase"; // my database
+import { db } from "../firebase"; // my database
 import { collection, addDoc } from "firebase/firestore"; // collection -> where data is stored, addDoc-> function to save data.
 import { Navbar } from "../Navbar/Navbar";
 import { motion } from "framer-motion";
@@ -14,14 +14,13 @@ const Reviews = ({
   selectedTime,
   onBack = () => {},
 }) => {
-
   const [isSending, setIsSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(null);
 
   // Initialize EmailJS
   useEffect(() => {
-    emailjs.init('AbT-uDvQJ20dCkqSz');
+    emailjs.init("AbT-uDvQJ20dCkqSz");
   }, []);
 
   // Get current time to determine greeting
@@ -36,7 +35,7 @@ const Reviews = ({
   }
 
   const handleConfirm = async () => {
-    console.log("🔵 handleConfirm started");
+    console.log("handleConfirm started");
     setIsSending(true);
     setError(null);
     setSent(false);
@@ -49,31 +48,37 @@ const Reviews = ({
       phone: selectedPhone,
       date: selectedDate,
       time: selectedTime,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
     try {
       // STEP 1: Save to firebase first
       console.log("⏳ Step 1: Saving to Firestore...");
-      const docRef = await addDoc(collection(db, 'bookings'), bookingData);
-      console.log("✅ Step 1 Complete - Booking saved to Firestore with ID:", docRef.id);
+      const docRef = await addDoc(collection(db, "bookings"), bookingData);
+      console.log(
+        "✅ Step 1 Complete - Booking saved to Firestore with ID:",
+        docRef.id,
+      );
 
       // STEP 2: Send confirmation email to customer via EmailJS
-      console.log("⏳ Step 2: Sending email...");
-      console.log("📧 EmailJS Config - Service:", 'service_8noa3te', "Template:", 'template_7yyjbca');
-      const emailResponse = await emailjs.send(
-        'service_8noa3te', // replace with your EmailJS service ID
-        'template_7yyjbca', // replace with your EmailJS template ID
+      console.log("Step 2: Sending email...");
+      console.log(
+        " EmailJS Config - Service:",
+        "service_8noa3te",
+        "Template:",
+        "template_7yyjbca",
+      );
+      await emailjs.send(
+        "service_8noa3te", // replace with your EmailJS service ID
+        "template_7yyjbca", // replace with your EmailJS template ID
         {
           customer_name: selectedName,
           customer_email: selectedEmail,
-          service_name: selectedService?.name ?? 'N/A',
+          service_name: selectedService?.name ?? "N/A",
           booking_date: selectedDate,
           booking_time: selectedTime,
           customer_phone: selectedPhone,
-        }
+        },
       );
-      
-      
 
       // STEP 3: Open WhatsApp after everything succeeds
       console.log("Step 3: Opening WhatsApp...");
@@ -86,10 +91,10 @@ const Reviews = ({
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, "_blank");
       console.log("Step 3 Complete - WhatsApp opened");
-
     } catch (error) {
-
-      setError(`Failed to complete booking: ${error.message || 'Unknown error'}`);
+      setError(
+        `Failed to complete booking: ${error.message || "Unknown error"}`,
+      );
     } finally {
       setIsSending(false);
     }
@@ -151,14 +156,10 @@ const Reviews = ({
             font-semibold text-lg hover:bg-green-600 transition duration-300
             cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSending ? 'Sending...' : 'Confirm Booking'}
+            {isSending ? "Sending..." : "Confirm Booking"}
           </motion.button>
         </div>
-        {error && (
-          <p className="mt-6 text-red-600 font-medium">
-            {error}
-          </p>
-        )}
+        {error && <p className="mt-6 text-red-600 font-medium">{error}</p>}
         {sent && (
           <p className="mt-6 text-green-600 font-medium">
             ✓ Confirmation email sent successfully!

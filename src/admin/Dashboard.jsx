@@ -29,38 +29,38 @@ const Dashboard = () => {
   return (
     <section className="min-h-screen mx-auto py-10 md:pt-28 pt-28">
       <Navbar />
-    <div className="p-20">
-      <h1>Admin Bookings</h1>
-      <p>This is the admin bookings page.</p>
-      <div>
-        {bookings.map((booking, index) => (
-          <div key={index}>
-            <p>
-              <strong>Service:</strong> {booking.service}
-            </p>
-            <p>
-              <strong>Name:</strong> {booking.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {booking.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {booking.phone}
-            </p>
-            <p>
-              <strong>Date:</strong> {booking.date}
-            </p>
-            <p>
-              <strong>Time:</strong> {booking.time}
-            </p>
-            <p>
-              <strong>Created At:</strong>{" "}
-              {booking.createdAt?.toDate().toLocaleString()}
-            </p>
-          </div>
-        ))}
+      <div className="p-20">
+        <h1>Admin Bookings</h1>
+        <p>This is the admin bookings page.</p>
+        <div>
+          {bookings.map((booking, index) => (
+            <div key={index}>
+              <p>
+                <strong>Service:</strong> {booking.service}
+              </p>
+              <p>
+                <strong>Name:</strong> {booking.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {booking.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {booking.phone}
+              </p>
+              <p>
+                <strong>Date:</strong> {booking.date}
+              </p>
+              <p>
+                <strong>Time:</strong> {booking.time}
+              </p>
+              <p>
+                <strong>Created At:</strong>{" "}
+                {booking.createdAt?.toDate().toLocaleString()}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </section>
   );
 };
