@@ -40,24 +40,23 @@ export function Navbar() {
                 Reviews
               </li>
             </a>
-            <a href="#contact">
+            <Link to={"/dashboard"}>
               <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Contact
+                Dashboard
               </li>
-            </a>
+            </Link>
           </ul>
         </div>
 
         {/* Navs right */}
-        <a
-          href=""
+        <Link to={"/services"}
           target="_blank"
           className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
           rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
           "
         >
-          Book a Demo
-        </a>
+          Get Started
+        </Link>
 
         <button
           onClick={() => setOpen(!open)}
@@ -111,7 +110,7 @@ export function Navbar() {
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
           >
-            Book a Demo
+            Get Started
           </a>
         </ul>
       )}
