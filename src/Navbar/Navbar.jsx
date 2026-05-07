@@ -97,21 +97,19 @@ export function Navbar() {
           >
             Reviews
           </li>
-          <li
-            href="#contact"
-            className="cursor-pointer hover:text-purple-500 active:purple-500"
-          >
-            Contact
-          </li>
-          <a
-            href="https://wa.me/+2348103251749"
+          <Link to={"/dashboard"}>
+            <li className="cursor-pointer hover:text-purple-500 active:purple-500">
+              Dashboard
+            </li>
+          </Link>
+          <Link to={"/services"}
             target="_blank"
             className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
           >
             Get Started
-          </a>
+          </Link>
         </ul>
       )}
     </nav>
