@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from "react";
 import Services from "./Services";
 import DateTimeSelection from "./DateTimeSelection";
 import Reviews from "./Reviews";
+import Dashboard from "../admin/Dashboard";
 // Sample services data
 const services = [
   {
@@ -42,6 +44,7 @@ export default function BookingFlow() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [step, setStep] = useState(1);
+
 
   useEffect(() => {
     const savedStep = localStorage.getItem("bookingStep");
@@ -104,7 +107,7 @@ export default function BookingFlow() {
     // clear all form data when a new service is selected
     setSelectedDate(null);
     setSelectedTime(null);
-    setSelectedName("");
+    // setSelectedName("");
     setSelectedEmail("");
     setSelectedPhone("");
   };
