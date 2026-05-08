@@ -45,61 +45,6 @@ export default function BookingFlow() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [step, setStep] = useState(1);
 
-
-  useEffect(() => {
-    const savedStep = localStorage.getItem("bookingStep");
-    const savedData = localStorage.getItem("bookingData");
-
-    console.log("BookingFlow: restoring from localStorage", { savedStep, savedData });
-
-    if (savedStep) {
-      const n = Number(savedStep);
-      if (Number.isFinite(n) && n >= 1 && n <= 3) setStep(n);
-    }
-
-    if (savedData) {
-      try {
-        const data = JSON.parse(savedData);
-        setSelectedService(data.selectedService || null);
-        setSelectedName(data.selectedName || '');
-        setSelectedEmail(data.selectedEmail || '');
-        setSelectedPhone(data.selectedPhone || '');
-        setSelectedDate(data.selectedDate || null);
-        setSelectedTime(data.selectedTime || null);
-      } catch (err) {
-        console.error('BookingFlow: failed to parse bookingData, clearing corrupt value', err);
-        localStorage.removeItem('bookingData');
-      }
-    }
-  }, []);
-
-
-  // Persist booking step and data(selectedService, date/time, phone, email...) in localStorage to prevent loss on page refresh
-  useEffect(() => {
-    localStorage.setItem("bookingStep", step.toString());
-  }, [step]);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "bookingData",
-      JSON.stringify({
-        selectedService,
-        selectedName,
-        selectedEmail,
-        selectedPhone,
-        selectedDate,
-        selectedTime,
-      }),
-    );
-  }, [
-    selectedService,
-    selectedName,
-    selectedEmail,
-    selectedPhone,
-    selectedDate,
-    selectedTime,
-  ]);
-
   // Handle service selection and update the selected service
   const handleSelectService = (service) => {
     setSelectedService(service);
@@ -117,10 +62,8 @@ export default function BookingFlow() {
     setStep(2);
   };
 
-  // Reset booking flow and clear persisted data
+  // Reset booking flow
   const resetBooking = () => {
-    localStorage.removeItem("bookingStep");
-    localStorage.removeItem("bookingData");
     setStep(1);
     setSelectedService(null);
     setSelectedName("");
