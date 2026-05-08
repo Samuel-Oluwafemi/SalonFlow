@@ -147,8 +147,8 @@ const Reviews = ({
         </div>
         {error && <p className="mt-6 text-red-600 font-medium">{error}</p>}
         {success && (
-          <p className="mt-6 text-green-600 font-medium">
-            Booking confirmed! WhatsApp opened - complete the chat with the salon.
+          <p className="mt-6 text-lg text-green-600 font-medium">
+            Booking Confirmed! <br /> Complete the chat with the salon.
           </p>
         )}
       </main>
