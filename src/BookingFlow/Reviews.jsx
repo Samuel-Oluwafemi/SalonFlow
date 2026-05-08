@@ -2,8 +2,7 @@ import { db } from "../firebase"; // my database
 import { collection, addDoc } from "firebase/firestore"; // collection -> where data is stored, addDoc-> function to save data.
 import { Navbar } from "../Navbar/Navbar";
 import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Reviews = ({
   selectedService,
@@ -15,13 +14,8 @@ const Reviews = ({
   onBack = () => {},
 }) => {
   const [isSending, setIsSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
-
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init("AbT-uDvQJ20dCkqSz");
-  }, []);
 
   // Get current time to determine greeting
   let greeting = "";
@@ -38,9 +32,9 @@ const Reviews = ({
     console.log("handleConfirm started");
     setIsSending(true);
     setError(null);
-    setSent(false);
+    setSuccess(false);
 
-    // create booking data object to save to Firestore and send via EmailJS
+    // create booking data object to save to Firestore
     const bookingData = {
       service: selectedService?.name ?? "N/A",
       name: selectedName,
@@ -51,34 +45,16 @@ const Reviews = ({
       createdAt: new Date(),
     };
     try {
-      // STEP 1: Save to firebase first
-      console.log("⏳ Step 1: Saving to Firestore...");
+      // STEP 1: Save booking to Firebase
+      console.log("Step 1: Saving to Firestore...");
       const docRef = await addDoc(collection(db, "bookings"), bookingData);
       console.log(
         "Step 1 Complete - Booking saved to Firestore with ID:",
         docRef.id,
       );
 
-      // STEP 2: Send confirmation email to customer via EmailJS
-      console.log("Step 2: Sending email...");
-      const emailResponse = await emailjs.send(
-        "service_8noa3te", // replace with your EmailJS service ID
-        "template_7yyjbca", // replace with your EmailJS template ID
-        {
-          customer_name: selectedName,
-          customer_email: selectedEmail,
-          service_name: selectedService?.name ?? "N/A",
-          booking_date: selectedDate,
-          booking_time: selectedTime,
-          customer_phone: selectedPhone,
-        },
-      );
-      // log the full response from EmailJS for debugging
-      console.log("Step 2 Complete - Email sent successfully:", emailResponse);
-      setSent(true);
-
-      // STEP 3: Open WhatsApp after everything succeeds
-      console.log("Step 3: Opening WhatsApp...");
+      // STEP 2: Open WhatsApp with booking confirmation
+      console.log("⏳ Step 2: Opening WhatsApp...");
       const name = selectedName ?? "N/A";
       const phone = selectedPhone ?? "N/A";
       const message = `I want to book ${selectedService?.name ?? "a service"} 
@@ -87,9 +63,9 @@ const Reviews = ({
       const whatsappNumber = "2348102409849"; // replace with your WhatsApp number
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, "_blank");
-      console.log("Step 3 Complete - WhatsApp opened");
+      console.log("✅ Step 2 Complete - WhatsApp opened");
+      setSuccess(true);
     } catch (error) {
-      // handle any errors that occur during the booking process
       console.error("Error occurred:", error);
       console.error("Error message:", error.message);
       console.error("Error details:", error);
@@ -157,13 +133,13 @@ const Reviews = ({
             font-semibold text-lg hover:bg-green-600 transition duration-300
             cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSending ? "Sending..." : "Confirm Booking"}
+            {isSending ? "Confirming..." : "Confirm Booking"}
           </motion.button>
         </div>
-        {error && <p className="mt-6 text-red-600 font-medium">{error}</p>}
-        {sent && (
+        {error && <p className="mt-6 text-red-600 font-medium">❌ {error}</p>}
+        {success && (
           <p className="mt-6 text-green-600 font-medium">
-            ✓ Confirmation email sent successfully!
+            Booking confirmed! WhatsApp opened - complete the chat with the salon.
           </p>
         )}
       </main>
