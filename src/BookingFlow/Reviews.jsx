@@ -55,19 +55,13 @@ const Reviews = ({
       console.log("⏳ Step 1: Saving to Firestore...");
       const docRef = await addDoc(collection(db, "bookings"), bookingData);
       console.log(
-        "✅ Step 1 Complete - Booking saved to Firestore with ID:",
+        "Step 1 Complete - Booking saved to Firestore with ID:",
         docRef.id,
       );
 
       // STEP 2: Send confirmation email to customer via EmailJS
       console.log("Step 2: Sending email...");
-      console.log(
-        " EmailJS Config - Service:",
-        "service_8noa3te",
-        "Template:",
-        "template_7yyjbca",
-      );
-      await emailjs.send(
+      const emailResponse = await emailjs.send(
         "service_8noa3te", // replace with your EmailJS service ID
         "template_7yyjbca", // replace with your EmailJS template ID
         {
@@ -79,6 +73,9 @@ const Reviews = ({
           customer_phone: selectedPhone,
         },
       );
+      // log the full response from EmailJS for debugging
+      console.log("Step 2 Complete - Email sent successfully:", emailResponse);
+      setSent(true);
 
       // STEP 3: Open WhatsApp after everything succeeds
       console.log("Step 3: Opening WhatsApp...");
@@ -92,6 +89,10 @@ const Reviews = ({
       window.open(whatsappUrl, "_blank");
       console.log("Step 3 Complete - WhatsApp opened");
     } catch (error) {
+      // handle any errors that occur during the booking process
+      console.error("Error occurred:", error);
+      console.error("Error message:", error.message);
+      console.error("Error details:", error);
       setError(
         `Failed to complete booking: ${error.message || "Unknown error"}`,
       );
