@@ -46,10 +46,19 @@ const Reviews = ({
     };
     try {
       // STEP 1: Save booking to Firebase
-      console.log("Step 1: Saving to Firestore...");
-      const docRef = await addDoc(collection(db, "bookings"), bookingData);
+      console.log("⏳ Step 1: Saving to Firestore...");
+      console.log("📦 Booking data:", bookingData);
+      
+      // Add timeout to catch hanging requests
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Firebase request timed out after 10 seconds")), 10000)
+      );
+      
+      const docPromise = addDoc(collection(db, "bookings"), bookingData);
+      const docRef = await Promise.race([docPromise, timeoutPromise]);
+      
       console.log(
-        "Step 1 Complete - Booking saved to Firestore with ID:",
+        "✅ Step 1 Complete - Booking saved to Firestore with ID:",
         docRef.id,
       );
 
