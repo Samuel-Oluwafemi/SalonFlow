@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const Reviews = ({
   selectedService,
+  selectedSubService,
   selectedName,
   selectedEmail,
   selectedPhone,
@@ -37,6 +38,8 @@ const Reviews = ({
     // create booking data object to save to Firestore
     const bookingData = {
       service: selectedService?.name ?? "N/A",
+      subService: selectedSubService?.name ?? "N/A",
+      subServicePrice: selectedSubService?.price ?? "N/A",
       name: selectedName,
       email: selectedEmail,
       phone: selectedPhone,
@@ -104,6 +107,9 @@ const Reviews = ({
           <h2 className="text-xl font-semibold mb-4">Service Details</h2>
           <p className="mb-2">
             <span className="font-medium">Service:</span> {selectedService.name}
+          </p>
+          <p className="mb-4">
+            <span className="font-medium">Selected Option:</span> {selectedSubService?.name} ({selectedSubService?.price})
           </p>
           <p className="mb-2">
             <span className="font-medium">Date:</span> {selectedDate}
