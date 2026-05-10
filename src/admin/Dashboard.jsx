@@ -1,11 +1,48 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import { db } from "../firebase"; // my database
-import { collection, getDocs } from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
+import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
 
 // AdminBookings component to display all bookings in the Firestore database
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
+
+  // function to confirm a booking by updating its status to "confirmed" in Firestore
+  const confirmBooking = async (id) => {
+    // update the booking document with the given ID to set status to "confirmed"
+    const bookingRef = doc(db, "bookings", id);
+
+    await updateDoc(bookingRef, { status: "confirmed" });
+
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking.id === id ? { ...booking, status: "confirmed" } : booking,
+      ),
+    );
+  };
+
+  const completeBooking = async (id) => {
+    const bookingRef = doc(db, "bookings", id);
+
+    await updateDoc(bookingRef, { status: "completed" });
+
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking.id === id ? { ...booking, status: "completed" } : booking,
+      ),
+    );
+  };
+
+  const deleteBooking = async (id) => {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      const bookingRef = doc(db, "bookings", id);
+      await deleteDoc(bookingRef);
+
+      setBookings((prevBookings) =>
+        prevBookings.filter((booking) => booking.id !== id),
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -22,44 +59,116 @@ const Dashboard = () => {
       );
       setBookings(bookingsList);
     };
-
+    
     fetchBookings();
   }, []);
-
+  
   return (
-    <section className="min-h-screen mx-auto py-10 md:pt-28 pt-28">
+    <section className="min-h-screen mx-auto py-6 md:py-10 pt-24 md:pt-28 bg-gray-50">
       <Navbar />
-      <div className="p-20">
-        <h1>Admin Bookings</h1>
-        <p>This is the admin bookings page.</p>
-        <div>
-          {bookings.map((booking, index) => (
-            <div key={index}>
-              <p>
-                <strong>Service:</strong> {booking.service}
-              </p>
-              <p>
-                <strong>Name:</strong> {booking.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {booking.email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {booking.phone}
-              </p>
-              <p>
-                <strong>Date:</strong> {booking.date}
-              </p>
-              <p>
-                <strong>Time:</strong> {booking.time}
-              </p>
-              <p>
-                <strong>Created At:</strong>{" "}
-                {booking.createdAt?.toDate().toLocaleString()}
-              </p>
-            </div>
-          ))}
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="mb-8 md:mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Admin Dashboard</h1>
+          <p className="text-gray-600">Manage all customer bookings</p>
         </div>
+
+        {bookings.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No bookings yet</p>
+          </div>
+        ) : (
+          <div className="space-y-4 md:space-y-6">
+            {bookings.map((booking) => {
+              const status = booking.status || "pending";
+              return (
+                <div
+                  key={booking.id}
+                  className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 overflow-hidden"
+                >
+                  <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    {/* Service */}
+                    <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
+                      <p className="text-gray-600 text-sm mb-1">Service</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-800">
+                        {booking.service}
+                      </h2>
+                      {booking.subService && (
+                        <p className="text-gray-600 text-sm mt-1">
+                          <span className="font-medium">Option:</span> {booking.subService} ({booking.subServicePrice})
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Customer Info */}
+                    <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
+                      <p className="text-gray-600 text-sm mb-2">Customer Details</p>
+                      <p className="text-gray-800 font-medium">{booking.name}</p>
+                      <p className="text-gray-600 text-sm">{booking.email}</p>
+                      <p className="text-gray-600 text-sm">{booking.phone}</p>
+                    </div>
+
+                    {/* Date & Time */}
+                    <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
+                      <p className="text-gray-600 text-sm mb-2">Appointment</p>
+                      <p className="text-gray-800 font-medium">{booking.date}</p>
+                      <p className="text-gray-600 text-sm">{booking.time}</p>
+                      <p className="text-gray-600 text-xs mt-2">
+                        {booking.createdAt?.toDate().toLocaleDateString()}
+                      </p>
+                    </div>
+
+                    {/* Status */}
+                    <div>
+                      <p className="text-gray-600 text-sm mb-2">Status</p>
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-sm font-bold
+                          ${
+                            booking.status === "confirmed"
+                              ? "bg-green-100 text-green-700"
+                              : booking.status === "completed"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-yellow-100 text-yellow-700"
+                          }`
+                        }
+                      >
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="bg-gray-50 px-4 md:px-6 py-4 flex flex-col sm:flex-row gap-3 md:gap-4">
+                    <button
+                      disabled={status !== "pending"}
+                      className="flex-1 bg-purple-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                      cursor-pointer hover:bg-purple-600 transition duration-300 
+                      disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => confirmBooking(booking.id)}
+                    >
+                      Confirm
+                    </button>
+                    <button
+                      disabled={status !== "confirmed"}
+                      className="flex-1 bg-green-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                      cursor-pointer hover:bg-green-600 transition duration-300 
+                      disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => completeBooking(booking.id)}
+                    >
+                      Complete
+                    </button>
+                    <button
+                      className="flex-1 bg-red-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                      cursor-pointer hover:bg-red-600 transition duration-300"
+                      onClick={() => deleteBooking(booking.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
