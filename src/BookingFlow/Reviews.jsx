@@ -42,6 +42,7 @@ const Reviews = ({
       phone: selectedPhone,
       date: selectedDate,
       time: selectedTime,
+      status: "pending",
       createdAt: new Date(),
     };
     try {
