@@ -94,7 +94,8 @@ const Dashboard = () => {
                       </h2>
                       {booking.subService && (
                         <p className="text-gray-600 text-sm mt-1">
-                          <span className="font-medium">Option:</span> {booking.subService} ({booking.subServicePrice})
+                          <span className="font-medium">Option:
+                            </span> {booking.subService} ({booking.subServicePrice})
                         </p>
                       )}
                     </div>
@@ -110,9 +111,14 @@ const Dashboard = () => {
                     {/* Date & Time */}
                     <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
                       <p className="text-gray-600 text-sm mb-2">Appointment</p>
-                      <p className="text-gray-800 font-medium">{booking.date}</p>
-                      <p className="text-gray-600 text-sm">{booking.time}</p>
+                      <p className="text-gray-800 font-medium">
+                        <span className="font-medium">Selected Date:</span> {booking.date}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        <span className="font-medium">Selected time:</span> {booking.time}
+                      </p>
                       <p className="text-gray-600 text-xs mt-2">
+                        <span className="font-medium mr-1">Time of booking:</span>
                         {booking.createdAt?.toDate().toLocaleDateString()}
                       </p>
                     </div>
