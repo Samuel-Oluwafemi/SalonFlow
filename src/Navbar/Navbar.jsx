@@ -30,11 +30,11 @@ export function Navbar() {
                 Home
               </li>
             </Link>
-            <a href="#features">
+            <Link to={"/services"}>
               <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Features
+                Services
               </li>
-            </a>
+            </Link>
             <a href="#reviews">
               <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
                 Reviews
@@ -86,12 +86,6 @@ export function Navbar() {
               Services
             </li>
           </Link>
-          <li
-            href="#packages"
-            className="cursor-pointer hover:text-purple-500 active:purple-500"
-          >
-            Packages
-          </li>
           <li
             href="#reviews"
             className="cursor-pointer hover:text-purple-500 active:purple-500"
