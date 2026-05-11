@@ -1,6 +1,7 @@
 import { Navbar } from "../Navbar/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, DollarSign, Check, ChevronRight } from "lucide-react";
+import { useRef, useEffect } from "react";
 
 const Services = ({
   services,
@@ -11,6 +12,21 @@ const Services = ({
   onContinue,
   onBack = () => {},
 }) => {
+  // Create ref for sub-services section
+  const subServicesRef = useRef(null);
+
+  // Auto-scroll to sub-services when service is selected
+  useEffect(() => {
+    if (selectedService && subServicesRef.current) {
+      setTimeout(() => {
+        subServicesRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 300); // Delay to allow animation to start
+    }
+  }, [selectedService]);
+
   // Continue btn is enabled only if both service AND sub-service are selected
   const canContinue = Boolean(selectedService && selectedSubService);
   
@@ -140,6 +156,7 @@ const Services = ({
         <AnimatePresence>
           {selectedService && (
             <motion.div
+              ref={subServicesRef}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
