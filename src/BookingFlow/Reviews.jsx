@@ -109,7 +109,8 @@ const Reviews = ({
   };
 
   return (
-    <section className="min-h-screen mx-auto py-10 md:pt-28 pt-20 bg-gradient-to-br from-white via-purple-50 to-blue-50">
+    <section className="min-h-screen mx-auto py-10 md:pt-28 pt-20 bg-gradient-to-br 
+    from-white via-purple-50 to-blue-50">
       <Navbar />
 
       {/* Header */}
