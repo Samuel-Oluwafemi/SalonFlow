@@ -100,17 +100,20 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6">
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "all"
                 ? "bg-blue-500 text-white ring-2 ring-offset-2 ring-blue-400"
-                : "bg-blue-500 text-white"
+                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setFilter("all")}
           >
             All
+            <span className="bg-white text-blue-500 rounded-full px-2 py-0.5 text-xs font-bold">
+              {bookings.length}
+            </span>
           </button>
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "confirmed"
                 ? "bg-green-500 text-white ring-2 ring-offset-2 ring-green-400"
                 : "bg-green-500 text-white"
@@ -118,19 +121,25 @@ const Dashboard = () => {
             onClick={() => setFilter("confirmed")}
           >
             Confirmed
+            <span className="bg-white text-green-500 rounded-full px-2 py-0.5 text-xs font-bold">
+              {bookings.filter((b) => b.status === "confirmed").length}
+            </span>
           </button>
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "completed"
                 ? "bg-purple-500 text-white ring-2 ring-offset-2 ring-purple-400"
-                : "bg-purple-500 text-white "
+                : "bg-purple-500 text-white"
             }`}
             onClick={() => setFilter("completed")}
           >
             Completed
+            <span className="bg-white text-purple-500 rounded-full px-2 py-0.5 text-xs font-bold">
+              {bookings.filter((b) => b.status === "completed").length}
+            </span>
           </button>
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "pending"
                 ? "bg-yellow-500 text-white ring-2 ring-offset-2 ring-yellow-400"
                 : "bg-yellow-500 text-white"
@@ -138,9 +147,12 @@ const Dashboard = () => {
             onClick={() => setFilter("pending")}
           >
             Pending
+            <span className="bg-white text-yellow-500 rounded-full px-2 py-0.5 text-xs font-bold">
+              {bookings.filter((b) => b.status === "pending").length}
+            </span>
           </button>
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "cancelled"
                 ? "bg-red-500 text-white ring-2 ring-offset-2 ring-red-400"
                 : "bg-red-500 text-white"
@@ -148,6 +160,9 @@ const Dashboard = () => {
             onClick={() => setFilter("cancelled")}
           >
             Cancelled
+            <span className="bg-white text-red-500 rounded-full px-2 py-0.5 text-xs font-bold">
+              {bookings.filter((b) => b.status === "cancelled").length}
+            </span>
           </button>
         </div>
 
