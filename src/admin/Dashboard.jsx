@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import { db } from "../firebase"; // my database
-import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
 
 // AdminBookings component to display all bookings in the Firestore database
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
+  const [filter, setFilter] = useState("all"); // state to manage the current filter (e.g., all, confirmed, pending, cancelled)
 
   // function to confirm a booking by updating its status to "confirmed" in Firestore
   const confirmBooking = async (id) => {
@@ -21,6 +28,17 @@ const Dashboard = () => {
     );
   };
 
+  const cancelBooking = async (id) => {
+    const bookingRef = doc(db, "bookings", id);
+
+    await updateDoc(bookingRef, { status: "cancelled" });
+
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking.id === id ? { ...booking, status: "cancelled" } : booking,
+      ),
+    );
+  };
   const completeBooking = async (id) => {
     const bookingRef = doc(db, "bookings", id);
 
@@ -44,6 +62,12 @@ const Dashboard = () => {
     }
   };
 
+  // filter bookings based on the selected filter (e.g., all, confirmed, pending, cancelled)
+  const filteredBookings =
+    filter === "all"
+      ? bookings
+      : bookings.filter((booking) => booking.status === filter);
+
   useEffect(() => {
     const fetchBookings = async () => {
       const bookingsCollection = collection(db, "bookings");
@@ -59,17 +83,52 @@ const Dashboard = () => {
       );
       setBookings(bookingsList);
     };
-    
+
     fetchBookings();
   }, []);
-  
+
   return (
     <section className="min-h-screen mx-auto py-6 md:py-10 pt-24 md:pt-28 bg-gray-50">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Admin Dashboard</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+            Admin Dashboard
+          </h1>
           <p className="text-gray-600">Manage all customer bookings</p>
+        </div>
+
+        <div className="flex gap-3 mb-6">
+          <button
+            className="px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-bold"
+            onClick={() => setFilter("all")}
+          >
+            All
+          </button>
+          <button
+            className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-bold"
+            onClick={() => setFilter("confirmed")}
+          >
+            Confirmed
+          </button>
+          <button
+            className="px-3 py-1 bg-purple-500 text-white rounded-full text-sm font-bold"
+            onClick={() => setFilter("completed")}
+          >
+            Completed
+          </button>
+          <button
+            className="px-3 py-1 bg-yellow-500 text-white rounded-full text-sm font-bold"
+            onClick={() => setFilter("pending")}
+          >
+            Pending
+          </button>
+          <button
+            className="px-3 py-1 bg-red-500 text-white rounded-full text-sm font-bold"
+            onClick={() => setFilter("cancelled")}
+          >
+            Cancelled
+          </button>
         </div>
 
         {bookings.length === 0 ? (
@@ -78,7 +137,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="space-y-4 md:space-y-6">
-            {bookings.map((booking) => {
+            {filteredBookings.map((booking) => {
               const status = booking.status || "pending";
               return (
                 <div
@@ -94,16 +153,20 @@ const Dashboard = () => {
                       </h2>
                       {booking.subService && (
                         <p className="text-gray-600 text-sm mt-1">
-                          <span className="font-medium">Option:
-                            </span> {booking.subService} ({booking.subServicePrice})
+                          <span className="font-medium">Option:</span>{" "}
+                          {booking.subService} ({booking.subServicePrice})
                         </p>
                       )}
                     </div>
 
                     {/* Customer Info */}
                     <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
-                      <p className="text-gray-600 text-sm mb-2">Customer Details</p>
-                      <p className="text-gray-800 font-medium">{booking.name}</p>
+                      <p className="text-gray-600 text-sm mb-2">
+                        Customer Details
+                      </p>
+                      <p className="text-gray-800 font-medium">
+                        {booking.name}
+                      </p>
                       <p className="text-gray-600 text-sm">{booking.email}</p>
                       <p className="text-gray-600 text-sm">{booking.phone}</p>
                     </div>
@@ -112,13 +175,17 @@ const Dashboard = () => {
                     <div className="border-b md:border-b-0 md:border-r md:pr-4 pb-4 md:pb-0">
                       <p className="text-gray-600 text-sm mb-2">Appointment</p>
                       <p className="text-gray-800 font-medium">
-                        <span className="font-medium">Selected Date:</span> {booking.date}
+                        <span className="font-medium">Selected Date:</span>{" "}
+                        {booking.date}
                       </p>
                       <p className="text-gray-600 text-sm">
-                        <span className="font-medium">Selected time:</span> {booking.time}
+                        <span className="font-medium">Selected time:</span>{" "}
+                        {booking.time}
                       </p>
                       <p className="text-gray-600 text-xs mt-2">
-                        <span className="font-medium mr-1">Time of booking:</span>
+                        <span className="font-medium mr-1">
+                          Time of booking:
+                        </span>
                         {booking.createdAt?.toDate().toLocaleDateString()}
                       </p>
                     </div>
@@ -134,8 +201,7 @@ const Dashboard = () => {
                               : booking.status === "completed"
                                 ? "bg-blue-100 text-blue-700"
                                 : "bg-yellow-100 text-yellow-700"
-                          }`
-                        }
+                          }`}
                       >
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
@@ -168,6 +234,13 @@ const Dashboard = () => {
                       onClick={() => deleteBooking(booking.id)}
                     >
                       Delete
+                    </button>
+                    <button
+                      className="flex-1 bg-gray-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                      cursor-pointer hover:bg-gray-600 transition duration-300"
+                      onClick={() => cancelBooking(booking.id)}
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
