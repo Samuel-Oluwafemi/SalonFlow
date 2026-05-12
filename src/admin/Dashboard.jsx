@@ -100,31 +100,51 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6">
           <button
-            className="px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-bold"
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+              filter === "all"
+                ? "bg-blue-500 text-white ring-2 ring-offset-2 ring-blue-400"
+                : "bg-blue-500 text-white"
+            }`}
             onClick={() => setFilter("all")}
           >
             All
           </button>
           <button
-            className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-bold"
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+              filter === "confirmed"
+                ? "bg-green-500 text-white ring-2 ring-offset-2 ring-green-400"
+                : "bg-green-500 text-white"
+            }`}
             onClick={() => setFilter("confirmed")}
           >
             Confirmed
           </button>
           <button
-            className="px-3 py-1 bg-purple-500 text-white rounded-full text-sm font-bold"
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+              filter === "completed"
+                ? "bg-purple-500 text-white ring-2 ring-offset-2 ring-purple-400"
+                : "bg-purple-500 text-white "
+            }`}
             onClick={() => setFilter("completed")}
           >
             Completed
           </button>
           <button
-            className="px-3 py-1 bg-yellow-500 text-white rounded-full text-sm font-bold"
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+              filter === "pending"
+                ? "bg-yellow-500 text-white ring-2 ring-offset-2 ring-yellow-400"
+                : "bg-yellow-500 text-white"
+            }`}
             onClick={() => setFilter("pending")}
           >
             Pending
           </button>
           <button
-            className="px-3 py-1 bg-red-500 text-white rounded-full text-sm font-bold"
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 ${
+              filter === "cancelled"
+                ? "bg-red-500 text-white ring-2 ring-offset-2 ring-red-400"
+                : "bg-red-500 text-white"
+            }`}
             onClick={() => setFilter("cancelled")}
           >
             Cancelled
