@@ -28,6 +28,7 @@ const Dashboard = () => {
     );
   };
 
+  // function to cancel a booking by updating its status to "cancelled" in Firestore
   const cancelBooking = async (id) => {
     const bookingRef = doc(db, "bookings", id);
 
@@ -39,6 +40,8 @@ const Dashboard = () => {
       ),
     );
   };
+
+  // function to mark a booking as completed by updating its status in Firestore
   const completeBooking = async (id) => {
     const bookingRef = doc(db, "bookings", id);
 
@@ -50,7 +53,7 @@ const Dashboard = () => {
       ),
     );
   };
-
+  // function to delete a booking by removing its document from Firestore
   const deleteBooking = async (id) => {
     if (window.confirm("Are you sure you want to delete this booking?")) {
       const bookingRef = doc(db, "bookings", id);
@@ -98,9 +101,12 @@ const Dashboard = () => {
           <p className="text-gray-600">Manage all customer bookings</p>
         </div>
 
+        {/* Filter buttons */}
         <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6">
+          {/* All button */}
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all 
+              duration-200 flex items-center justify-center gap-2 ${
               filter === "all"
                 ? "bg-blue-500 text-white ring-2 ring-offset-2 ring-blue-400"
                  : "bg-blue-500 text-white"
@@ -108,10 +114,13 @@ const Dashboard = () => {
             onClick={() => setFilter("all")}
           >
             All
-            <span className="bg-white text-blue-500 rounded-full px-2 py-0.5 text-xs font-bold">
+            <span className="bg-white text-blue-500 rounded-full px-2 py-0.5
+             text-xs font-bold">
               {bookings.length}
             </span>
           </button>
+
+          {/* Confirmed button */}
           <button
             className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "confirmed"
@@ -125,6 +134,8 @@ const Dashboard = () => {
               {bookings.filter((b) => b.status === "confirmed").length}
             </span>
           </button>
+
+          {/* Completed button */}
           <button
             className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "completed"
@@ -138,6 +149,8 @@ const Dashboard = () => {
               {bookings.filter((b) => b.status === "completed").length}
             </span>
           </button>
+
+          {/* Pending button */}
           <button
             className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "pending"
@@ -151,6 +164,8 @@ const Dashboard = () => {
               {bookings.filter((b) => b.status === "pending").length}
             </span>
           </button>
+
+          {/* Cancelled button */}
           <button
             className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
               filter === "cancelled"
@@ -165,17 +180,21 @@ const Dashboard = () => {
             </span>
           </button>
         </div>
-
+            {/* Booking list */}
         {bookings.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No bookings yet</p>
           </div>
+          // if there are bookings but none match the selected filter, 
+          // show a message indicating no bookings found for that filter
         ) : filteredBookings.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">
               No bookings found with the selected filter
             </p>
           </div>
+          // if there are bookings that match the selected filter, 
+          // display them in a grid layout with details and action buttons for each booking
         ) : (
           <div className="space-y-4 md:space-y-6">
             {filteredBookings.map((booking) => {
@@ -244,6 +263,7 @@ const Dashboard = () => {
                                 : "bg-yellow-100 text-yellow-700"
                           }`}
                       >
+                        {/* Status text */}
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
                     </div>
