@@ -98,7 +98,7 @@ const Dashboard = () => {
           <p className="text-gray-600">Manage all customer bookings</p>
         </div>
 
-        <div className="flex grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6">
           <button
             className="px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-bold"
             onClick={() => setFilter("all")}
