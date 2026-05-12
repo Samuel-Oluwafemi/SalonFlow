@@ -135,6 +135,12 @@ const Dashboard = () => {
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No bookings yet</p>
           </div>
+        ) : filteredBookings.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">
+              No bookings found with the selected filter
+            </p>
+          </div>
         ) : (
           <div className="space-y-4 md:space-y-6">
             {filteredBookings.map((booking) => {
@@ -210,24 +216,24 @@ const Dashboard = () => {
 
                   {/* Action Buttons */}
                   <div className="bg-gray-50 px-4 md:px-6 py-4 flex flex-col sm:flex-row gap-3 md:gap-4">
-                    <button
-                      disabled={status !== "pending"}
-                      className="flex-1 bg-purple-500 py-2 px-4 rounded-lg text-white text-sm font-bold
-                      cursor-pointer hover:bg-purple-600 transition duration-300 
-                      disabled:opacity-50 disabled:cursor-not-allowed"
-                      onClick={() => confirmBooking(booking.id)}
-                    >
-                      Confirm
-                    </button>
-                    <button
-                      disabled={status !== "confirmed"}
-                      className="flex-1 bg-green-500 py-2 px-4 rounded-lg text-white text-sm font-bold
-                      cursor-pointer hover:bg-green-600 transition duration-300 
-                      disabled:opacity-50 disabled:cursor-not-allowed"
-                      onClick={() => completeBooking(booking.id)}
-                    >
-                      Complete
-                    </button>
+                    {status === "pending" && (
+                      <button
+                        className="flex-1 bg-purple-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                        cursor-pointer hover:bg-purple-600 transition duration-300"
+                        onClick={() => confirmBooking(booking.id)}
+                      >
+                        Confirm
+                      </button>
+                    )}
+                    {status === "confirmed" && (
+                      <button
+                        className="flex-1 bg-green-500 py-2 px-4 rounded-lg text-white text-sm font-bold
+                        cursor-pointer hover:bg-green-600 transition duration-300"
+                        onClick={() => completeBooking(booking.id)}
+                      >
+                        Complete
+                      </button>
+                    )}
                     <button
                       className="flex-1 bg-red-500 py-2 px-4 rounded-lg text-white text-sm font-bold
                       cursor-pointer hover:bg-red-600 transition duration-300"
