@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import { motion } from "framer-motion";
 import { User, Mail, Phone, Calendar, Clock, ChevronRight } from "lucide-react";
@@ -16,13 +17,54 @@ const DateTimeSelection = ({
   onContinue = () => {},
   onBack = () => {},
 }) => {
-  const canContinue = Boolean(
-    selectedName &&
-    selectedEmail &&
-    selectedPhone &&
-    selectedDate &&
-    selectedTime,
-  );
+  const [errors, setErrors] = useState({});
+
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!selectedName || selectedName.trim() === "") {
+      newErrors.name = "Full name is required";
+    } else if (selectedName.length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    if (!selectedEmail || selectedEmail.trim() === "") {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(selectedEmail)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!selectedPhone || selectedPhone.trim() === "") {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}/.test(selectedPhone.replace(/\s/g, ""))) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+
+    if (!selectedDate) {
+      newErrors.date = "Please select a date";
+    } else {
+      const selectedDateObj = new Date(selectedDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDateObj < today) {
+        newErrors.date = "Please select a future date";
+      }
+    }
+
+    if (!selectedTime) {
+      newErrors.time = "Please select a time";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleContinue = () => {
+    if (validateForm()) {
+      onContinue();
+    }
+  };
 
   // Time slots grid
   const timeSlots = [
@@ -99,10 +141,15 @@ const DateTimeSelection = ({
                   type="text"
                   placeholder="John Doe"
                   value={selectedName || ""}
-                  onChange={(e) => onSelectName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 
-                  focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium"
+                  onChange={(e) => {
+                    onSelectName(e.target.value);
+                    setErrors({ ...errors, name: "" });
+                  }}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium ${
+                    errors.name ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-purple-500"
+                  }`}
                 />
+                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
               </motion.div>
 
               {/* Email */}
@@ -114,10 +161,15 @@ const DateTimeSelection = ({
                   type="email"
                   placeholder="john@example.com"
                   value={selectedEmail || ""}
-                  onChange={(e) => onSelectEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 
-                  focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium"
+                  onChange={(e) => {
+                    onSelectEmail(e.target.value);
+                    setErrors({ ...errors, email: "" });
+                  }}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium ${
+                    errors.email ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-purple-500"
+                  }`}
                 />
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </motion.div>
 
               {/* Phone */}
@@ -129,10 +181,15 @@ const DateTimeSelection = ({
                   type="tel"
                   placeholder="+234 901 234 5678"
                   value={selectedPhone || ""}
-                  onChange={(e) => onSelectPhone(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 
-                  focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium"
+                  onChange={(e) => {
+                    onSelectPhone(e.target.value);
+                    setErrors({ ...errors, phone: "" });
+                  }}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium ${
+                    errors.phone ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-purple-500"
+                  }`}
                 />
+                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
               </motion.div>
             </div>
           </motion.div>
@@ -153,10 +210,15 @@ const DateTimeSelection = ({
               <input
                 type="date"
                 value={selectedDate || ""}
-                onChange={(e) => onSelectDate(e.target.value)}
-                className="w-full px-4 py-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 
-                focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium text-lg"
+                onChange={(e) => {
+                  onSelectDate(e.target.value);
+                  setErrors({ ...errors, date: "" });
+                }}
+                className={`w-full px-4 py-4 rounded-lg border-2 focus:outline-none bg-gray-50 hover:bg-white transition duration-300 text-gray-900 font-medium text-lg ${
+                  errors.date ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"
+                }`}
               />
+              {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
             </motion.div>
           </motion.div>
 
@@ -176,7 +238,10 @@ const DateTimeSelection = ({
               {timeSlots.map((time) => (
                 <motion.button
                   key={time}
-                  onClick={() => onSelectTime(time)}
+                  onClick={() => {
+                    onSelectTime(time);
+                    setErrors({ ...errors, time: "" });
+                  }}
                   whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   className={`py-3 px-2 rounded-lg font-semibold transition duration-300 border-2 ${
@@ -189,6 +254,7 @@ const DateTimeSelection = ({
                 </motion.button>
               ))}
             </div>
+            {errors.time && <p className="text-red-500 text-xs mt-3">{errors.time}</p>}
           </motion.div>
 
           {/* Action Buttons */}
@@ -207,18 +273,13 @@ const DateTimeSelection = ({
             </motion.button>
 
             <motion.button
-              whileHover={canContinue ? { scale: 1.05 } : {}}
-              whileTap={canContinue ? { scale: 0.95 } : {}}
-              disabled={!canContinue}
-              onClick={onContinue}
-              className={`w-full md:w-48 py-4 text-lg rounded-xl font-bold transition duration-300 flex items-center justify-center gap-2 ${
-                canContinue
-                  ? "bg-gradient-to-r from-purple-500 to-blue-600 text-white cursor-pointer hover:shadow-lg"
-                  : "bg-gray-300 text-gray-600 cursor-not-allowed opacity-50"
-              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleContinue}
+              className={`w-full md:w-48 py-4 text-lg rounded-xl font-bold transition duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white cursor-pointer hover:shadow-lg`}
             >
               Continue
-              {canContinue && <ChevronRight size={20} />}
+              <ChevronRight size={20} />
             </motion.button>
           </motion.div>
         </motion.div>
