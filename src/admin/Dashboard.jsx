@@ -13,19 +13,25 @@ import {
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("all"); // state to manage the current filter (e.g., all, confirmed, pending, cancelled)
+  const [loading, setLoading] = useState(true); // state to manage loading state
+  const [confirmedBooking, setConfirmedBooking] = useState(null); // state for confirmation modal
 
   // function to confirm a booking by updating its status to "confirmed" in Firestore
-  const confirmBooking = async (id) => {
+  const confirmBooking = async (id, booking) => {
     // update the booking document with the given ID to set status to "confirmed"
     const bookingRef = doc(db, "bookings", id);
 
     await updateDoc(bookingRef, { status: "confirmed" });
 
     setBookings((prevBookings) =>
-      prevBookings.map((booking) =>
-        booking.id === id ? { ...booking, status: "confirmed" } : booking,
+      prevBookings.map((b) =>
+        b.id === id ? { ...b, status: "confirmed" } : b,
       ),
     );
+    
+    // Show confirmation modal
+    setConfirmedBooking(booking);
+    setTimeout(() => setConfirmedBooking(null), 3000); // Auto close after 3 seconds
   };
 
   // function to cancel a booking by updating its status to "cancelled" in Firestore
@@ -70,21 +76,32 @@ const Dashboard = () => {
     filter === "all"
       ? bookings
       : bookings.filter((booking) => booking.status === filter);
+      
+  // sort the filtered bookings by creation date in descending order (newest first) before rendering them in the UI
+  // we use the spread operator to manipulate the filteredBookings array without mutating the original state, ensuring that the sorting does not affect the underlying data structure.
+
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const bookingsCollection = collection(db, "bookings");
-      const bookingsSnapshot = await getDocs(bookingsCollection);
-      //   map through the snapshot to create an array of booking objects with their data and ID
-      const bookingsList = bookingsSnapshot.docs.map((doc) => ({
-        id: doc.id, // include document ID for potential future use (e.g., deletion, updates)
-        ...doc.data(), // spread the document data into the booking object
-      }));
+      try {
+        setLoading(true);
+        const bookingsCollection = collection(db, "bookings");
+        const bookingsSnapshot = await getDocs(bookingsCollection);
+        //   map through the snapshot to create an array of booking objects with their data and ID
+        const bookingsList = bookingsSnapshot.docs.map((doc) => ({
+          id: doc.id, // include document ID for potential future use (e.g., deletion, updates)
+          ...doc.data(), // spread the document data into the booking object
+        }));
 
-      bookingsList.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-      );
-      setBookings(bookingsList);
+        bookingsList.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
+        setBookings(bookingsList);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchBookings();
@@ -180,8 +197,29 @@ const Dashboard = () => {
             </span>
           </button>
         </div>
-            {/* Booking list */}
-        {bookings.length === 0 ? (
+
+        {/* Sort button */}
+        <div className="mb-6 flex justify-end">
+          <button
+            className="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
+            hover:bg-gray-900 transition duration-300 flex items-center gap-2"
+            onClick={() => setBookings([...bookings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))}
+          >
+            ↓ Sort by Latest
+          </button>
+        </div>
+
+        {/* Loading state */}
+        {loading ? (
+          <div className="flex justify-center items-center py-16">
+            <div className="text-center">
+              <div className="inline-flex justify-center items-center">
+                <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+              </div>
+              <p className="text-gray-600 mt-4">Loading bookings...</p>
+            </div>
+          </div>
+        ) : bookings.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No bookings yet</p>
           </div>
@@ -275,7 +313,7 @@ const Dashboard = () => {
                       <button
                         className="flex-1 bg-purple-500 py-2 px-4 rounded-lg text-white text-sm font-bold
                         cursor-pointer hover:bg-purple-600 transition duration-300"
-                        onClick={() => confirmBooking(booking.id)}
+                        onClick={() => confirmBooking(booking.id, booking)}
                       >
                         Confirm
                       </button>
@@ -310,6 +348,28 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal */}
+      {confirmedBooking && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full animate-bounce">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                <span className="text-3xl">✓</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                Booking Confirmed!
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Booking from {confirmedBooking.name} has been confirmed successfully.
+              </p>
+              <p className="text-sm text-gray-500">
+                {confirmedBooking.service} - {confirmedBooking.date} at {confirmedBooking.time}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
