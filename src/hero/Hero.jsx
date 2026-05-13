@@ -2,6 +2,8 @@ import { Navbar } from "../Navbar/Navbar";
 import { Features } from "./Features";
 import { Testimonials } from "./Testimonials";
 import { Stats } from "./Stats";
+import { HowItWorks } from "./HowItWorks";
+import { FAQs } from "./FAQs";
 import { Footer } from "./Footer";
 import { Img } from "./heroImg";
 import { Link } from "react-router-dom";
@@ -116,7 +118,9 @@ export default function Hero() {
       {/* Additional Sections */}
       <Stats />
       <Features />
+      <HowItWorks />
       <Testimonials />
+      <FAQs />
       <Footer />
     </section>
   );
