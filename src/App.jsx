@@ -1,6 +1,7 @@
 import Hero from "./hero/Hero";
 import BookingFlow from "./BookingFlow/BookingFlow";
 import Dashboard from "./admin/Dashboard";
+import Login from "./admin/Login";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 function App() {
@@ -51,6 +52,8 @@ function App() {
                 </motion.div>
               }
             />
+
+            <Route path="/login" element={<Login />} />
           </Routes>
         </AnimatePresence>
       </div>
