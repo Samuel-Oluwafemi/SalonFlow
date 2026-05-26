@@ -51,7 +51,7 @@ export const FAQs = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-montserrat">
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -74,7 +74,7 @@ export const FAQs = () => {
                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                 className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition duration-200"
               >
-                <h3 className="text-lg font-bold text-gray-900 text-left">
+                <h3 className="text-lg font-bold text-gray-900 text-left font-sora">
                   {faq.question}
                 </h3>
                 <motion.div
@@ -114,7 +114,7 @@ export const FAQs = () => {
           viewport={{ once: true }}
           className="mt-16 text-center p-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl"
         >
-          <h3 className="text-2xl font-bold text-white mb-2">
+          <h3 className="text-2xl font-bold text-white mb-2 font-outfit">
             Still have questions?
           </h3>
           <p className="text-purple-100 mb-6">

@@ -34,7 +34,7 @@ export const HowItWorks = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-outfit">
             How It Works
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -68,7 +68,7 @@ export const HowItWorks = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3 font-sora">
                     {step.title}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">
