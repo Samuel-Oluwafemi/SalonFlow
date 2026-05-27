@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore"; // Import Firestore to interact with the database
+import { getAuth } from "firebase/auth"; // Import Firebase Authentication
 import { Import } from "lucide-react";
 
 const firebaseConfig = {
@@ -15,3 +16,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // this line gives me access to the database
 export const db = getFirestore(app);
+export const auth = getAuth(app);
