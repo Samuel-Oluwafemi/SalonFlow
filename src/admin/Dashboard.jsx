@@ -28,7 +28,7 @@ const Dashboard = () => {
         b.id === id ? { ...b, status: "confirmed" } : b,
       ),
     );
-    
+
     // Show confirmation modal
     setConfirmedBooking(booking);
     setTimeout(() => setConfirmedBooking(null), 3000); // Auto close after 3 seconds
@@ -76,10 +76,9 @@ const Dashboard = () => {
     filter === "all"
       ? bookings
       : bookings.filter((booking) => booking.status === filter);
-      
+
   // sort the filtered bookings by creation date in descending order (newest first) before rendering them in the UI
   // we use the spread operator to manipulate the filteredBookings array without mutating the original state, ensuring that the sorting does not affect the underlying data structure.
-
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -124,26 +123,29 @@ const Dashboard = () => {
           <button
             className={`px-3 py-1 rounded-full text-sm font-bold transition-all 
               duration-200 flex items-center justify-center gap-2 ${
-              filter === "all"
-                ? "bg-blue-500 text-white ring-2 ring-offset-2 ring-blue-400"
-                 : "bg-blue-500 text-white"
-            }`}
+                filter === "all"
+                  ? "bg-blue-500 text-white ring-2 ring-offset-2 ring-blue-400"
+                  : "bg-blue-500 text-white"
+              }`}
             onClick={() => setFilter("all")}
           >
             All
-            <span className="bg-white text-blue-500 rounded-full px-2 py-0.5
-             text-xs font-bold">
+            <span
+              className="bg-white text-blue-500 rounded-full px-2 py-0.5
+             text-xs font-bold"
+            >
               {bookings.length}
             </span>
           </button>
 
           {/* Confirmed button */}
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-              filter === "confirmed"
-                ? "bg-green-500 text-white ring-2 ring-offset-2 ring-green-400"
-                : "bg-green-500 text-white"
-            }`}
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 
+              flex items-center justify-center gap-2 ${
+                filter === "confirmed"
+                  ? "bg-green-500 text-white ring-2 ring-offset-2 ring-green-400"
+                  : "bg-green-500 text-white"
+              }`}
             onClick={() => setFilter("confirmed")}
           >
             Confirmed
@@ -154,11 +156,12 @@ const Dashboard = () => {
 
           {/* Completed button */}
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-              filter === "completed"
-                ? "bg-purple-500 text-white ring-2 ring-offset-2 ring-purple-400"
-                : "bg-purple-500 text-white"
-            }`}
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 
+              flex items-center justify-center gap-2 ${
+                filter === "completed"
+                  ? "bg-purple-500 text-white ring-2 ring-offset-2 ring-purple-400"
+                  : "bg-purple-500 text-white"
+              }`}
             onClick={() => setFilter("completed")}
           >
             Completed
@@ -169,11 +172,12 @@ const Dashboard = () => {
 
           {/* Pending button */}
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-              filter === "pending"
-                ? "bg-yellow-500 text-white ring-2 ring-offset-2 ring-yellow-400"
-                : "bg-yellow-500 text-white"
-            }`}
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 
+              flex items-center justify-center gap-2 ${
+                filter === "pending"
+                  ? "bg-yellow-500 text-white ring-2 ring-offset-2 ring-yellow-400"
+                  : "bg-yellow-500 text-white"
+              }`}
             onClick={() => setFilter("pending")}
           >
             Pending
@@ -184,11 +188,12 @@ const Dashboard = () => {
 
           {/* Cancelled button */}
           <button
-            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-              filter === "cancelled"
-                ? "bg-red-500 text-white ring-2 ring-offset-2 ring-red-400"
-                : "bg-red-500 text-white"
-            }`}
+            className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-200 
+              flex items-center justify-center gap-2 ${
+                filter === "cancelled"
+                  ? "bg-red-500 text-white ring-2 ring-offset-2 ring-red-400"
+                  : "bg-red-500 text-white"
+              }`}
             onClick={() => setFilter("cancelled")}
           >
             Cancelled
@@ -203,7 +208,13 @@ const Dashboard = () => {
           <button
             className="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
             hover:bg-gray-900 transition duration-300 flex items-center gap-2"
-            onClick={() => setBookings([...bookings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))}
+            onClick={() =>
+              setBookings(
+                [...bookings].sort(
+                  (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+                ),
+              )
+            }
           >
             ↓ Sort by Latest
           </button>
@@ -214,7 +225,10 @@ const Dashboard = () => {
           <div className="flex justify-center items-center py-16">
             <div className="text-center">
               <div className="inline-flex justify-center items-center">
-                <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+                <div
+                  className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 
+                rounded-full animate-spin"
+                ></div>
               </div>
               <p className="text-gray-600 mt-4">Loading bookings...</p>
             </div>
@@ -223,17 +237,17 @@ const Dashboard = () => {
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No bookings yet</p>
           </div>
-          // if there are bookings but none match the selected filter, 
-          // show a message indicating no bookings found for that filter
-        ) : filteredBookings.length === 0 ? (
+        ) : // if there are bookings but none match the selected filter,
+        // show a message indicating no bookings found for that filter
+        filteredBookings.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">
               No bookings found with the selected filter
             </p>
           </div>
-          // if there are bookings that match the selected filter, 
-          // display them in a grid layout with details and action buttons for each booking
         ) : (
+          // if there are bookings that match the selected filter,
+          // display them in a grid layout with details and action buttons for each booking
           <div className="space-y-4 md:space-y-6">
             {filteredBookings.map((booking) => {
               const status = booking.status || "pending";
@@ -361,10 +375,12 @@ const Dashboard = () => {
                 Booking Confirmed!
               </h3>
               <p className="text-gray-600 mb-4">
-                Booking from {confirmedBooking.name} has been confirmed successfully.
+                Booking from {confirmedBooking.name} has been confirmed
+                successfully.
               </p>
               <p className="text-sm text-gray-500">
-                {confirmedBooking.service} - {confirmedBooking.date} at {confirmedBooking.time}
+                {confirmedBooking.service} - {confirmedBooking.date} at{" "}
+                {confirmedBooking.time}
               </p>
             </div>
           </div>

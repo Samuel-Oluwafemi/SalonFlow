@@ -37,7 +37,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl font-bold text-black md:mb-6 mb-4 leading-tight"
+              className="text-5xl md:text-6xl font-bold text-black md:mb-6 mb-4 leading-tight font-playfair"
             >
               The Smarter Way to Manage{" "}
               <span
@@ -65,7 +65,7 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
               className="flex flex-col md:flex-row gap-4 md:gap-6"
             >
-              <Link to="/services" className="flex-1 md:flex-none">
+              <Link to="/login" className="flex-1 md:flex-none">
                 <button className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-blue-600 
                 text-white px-8 py-4 rounded-lg text-lg font-bold hover:shadow-lg hover:scale-105 
                 transition duration-300 flex items-center justify-center gap-2 group">
