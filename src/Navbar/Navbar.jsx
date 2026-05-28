@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, X, Boxes } from "lucide-react";
 import { Link } from "react-router-dom";
-export function Navbar() {
+export function Navbar({ user }) {
   const [open, setOpen] = useState(false);
   return (
     <nav
@@ -40,11 +40,13 @@ export function Navbar() {
                 Reviews
               </li>
             </a>
-            <Link to={"/dashboard"}>
-              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Dashboard
-              </li>
-            </Link>
+            {user && (
+              <Link to="/dashboard">
+                <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                  Dashboard
+                </li>
+              </Link>
+            )}
           </ul>
         </div>
 
@@ -92,7 +94,7 @@ export function Navbar() {
           >
             Reviews
           </li>
-          <Link to={"/dashboard"}>
+          <Link to={user ? "/dashboard" : "/login"}>
             <li className="cursor-pointer hover:text-purple-500 active:purple-500">
               Dashboard
             </li>
