@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Menu, X, Boxes } from "lucide-react";
+import { Menu, X, Boxes, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-export function Navbar({ user }) {
+
+export function Navbar({ user, onLogout }) {
   const [open, setOpen] = useState(false);
   return (
     <nav
@@ -50,24 +51,41 @@ export function Navbar({ user }) {
           </ul>
         </div>
 
-        {/* Navs right */}
-        <Link
-          to={"/services"}
-          target="_blank"
-          className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
-          rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
-          "
-        >
-          Get Started
-        </Link>
+        {/* Navs right - Get Started & Logout */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <Link
+            to={"/services"}
+            target="_blank"
+            className="hidden md:hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
+            rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
+            "
+          >
+            Get Started
+          </Link>
 
-        <button
-          onClick={() => setOpen(!open)}
-          data-aos="fade-left"
-          className="md:hidden cursor-pointer font-bold text-purple-600"
-        >
-          {!open ? <Menu /> : <X />}
-        </button>
+          <button
+            onClick={() => setOpen(!open)}
+            data-aos="fade-left"
+            className="md:hidden cursor-pointer font-bold text-purple-600"
+          >
+            {!open ? <Menu /> : <X />}
+          </button>
+
+          {/* Logout Button - appears on all screens */}
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              data-aos="fade-left"
+              className="flex items-center gap-1 md:gap-2 cursor-pointer text-purple-600 
+              hover:text-purple-700 transition duration-300"
+            >
+              <div className="flex flex-col md:flex-row items-center md:gap-2">
+                <LogOut size={20} />
+                <span className="text-xs md:text-sm font-semibold">Sign out</span>
+              </div>
+            </button>
+          )}
+        </div>
       </div>
       {open && (
         <ul

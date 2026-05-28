@@ -124,7 +124,7 @@ const Dashboard = () => {
 
   return (
     <section className="min-h-screen mx-auto py-6 md:py-10 pt-24 md:pt-28 bg-gray-50">
-      <Navbar />
+      <Navbar onLogout={handleLogout} />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-8 md:mb-12 flex items-center justify-between">
           <div>
@@ -133,16 +133,7 @@ const Dashboard = () => {
             </h1>
             <p className="text-gray-600">Manage all customer bookings</p>
           </div>
-          {/* Logout button */}
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 
-            text-white rounded-lg font-semibold hover:from-red-600 hover:to-red-700 
-            transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-          >
-            <Power size={20} />
-            <span className="hidden sm:inline">Logout</span>
-          </button>
+          {/* Desktop Logout button - hidden on mobile (available in navbar) */}
         </div>
 
         {/* Filter buttons */}
