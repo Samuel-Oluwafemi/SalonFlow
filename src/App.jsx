@@ -25,7 +25,11 @@ function App() {
   const location = useLocation();
   
   if (authLoading) {
-    return <p>Loading...</p>
+    return (
+      <div className="loading-screen">
+        Checking session...
+      </div>
+    )
   }
 
   return (
@@ -42,7 +46,7 @@ function App() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <Hero />
+                  <Hero user={user} />
                 </motion.div>
               }
             />
