@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Boxes, Loader } from "lucide-react";
+import { Boxes, Loader, FileWarning } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -118,6 +118,12 @@ export default function Login() {
               disabled={loading}
               required
             />
+
+            <a href="#">
+              <h2 className="text-xs mt-1 underline text-blue-800">
+                forgot password
+              </h2>
+            </a>
           </div>
 
           {/* Submit Button */}
@@ -141,9 +147,12 @@ export default function Login() {
         </form>
 
         {/* Footer */}
-        <p className="text-center text-gray-600 text-xs mt-4">
-          Protected admin access only
-        </p>
+        <div className="flex text-center justify-center mt-4 gap-1">
+          <FileWarning className="text-purple-600" size={15} />
+          <p className="text-center text-gray-600 text-xs">
+            Protected admin access only
+          </p>
+        </div>
       </div>
     </div>
   );
