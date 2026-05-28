@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import { Power } from "lucide-react";
 import { Navbar } from "../Navbar/Navbar";
 import { db } from "../firebase"; // my database
 import {
@@ -9,13 +13,25 @@ import {
   deleteDoc,
 } from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
 
+
 // AdminBookings component to display all bookings in the Firestore database
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("all"); // state to manage the current filter (e.g., all, confirmed, pending, cancelled)
   const [loading, setLoading] = useState(true); // state to manage loading state
   const [confirmedBooking, setConfirmedBooking] = useState(null); // state for confirmation modal
+  // useNavigate hook from react-router-dom to programmatically navigate between routes
+  const navigate = useNavigate();
 
+// function to handle user logout by signing out from Firebase Authentication and navigating back to the home page
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
   // function to confirm a booking by updating its status to "confirmed" in Firestore
   const confirmBooking = async (id, booking) => {
     // update the booking document with the given ID to set status to "confirmed"
@@ -110,11 +126,23 @@ const Dashboard = () => {
     <section className="min-h-screen mx-auto py-6 md:py-10 pt-24 md:pt-28 bg-gray-50">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            Admin Dashboard
-          </h1>
-          <p className="text-gray-600">Manage all customer bookings</p>
+        <div className="mb-8 md:mb-12 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+              Admin Dashboard
+            </h1>
+            <p className="text-gray-600">Manage all customer bookings</p>
+          </div>
+          {/* Logout button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 
+            text-white rounded-lg font-semibold hover:from-red-600 hover:to-red-700 
+            transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+          >
+            <Power size={20} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
         </div>
 
         {/* Filter buttons */}
@@ -202,9 +230,9 @@ const Dashboard = () => {
             </span>
           </button>
         </div>
-
+        
         {/* Sort button */}
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 flex justify-start">
           <button
             className="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
             hover:bg-gray-900 transition duration-300 flex items-center gap-2"
