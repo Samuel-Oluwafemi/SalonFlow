@@ -21,15 +21,11 @@ function App() {
     });
     return () => unsubscribe();
   }, []);
-  
+
   const location = useLocation();
-  
+
   if (authLoading) {
-    return (
-      <div className="loading-screen">
-        Checking session...
-      </div>
-    )
+    return <div className="loading-screen">Checking session...</div>;
   }
 
   return (
@@ -75,7 +71,7 @@ function App() {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <Dashboard />
+                    <Dashboard user={user} />
                   </motion.div>
                 ) : (
                   <Navigate to="/login" />
