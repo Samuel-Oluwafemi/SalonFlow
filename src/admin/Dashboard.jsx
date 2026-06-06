@@ -13,9 +13,8 @@ import {
   deleteDoc,
 } from "firebase/firestore"; // collection -> where data is stored, getDocs-> function to retrieve data.
 
-
 // AdminBookings component to display all bookings in the Firestore database
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("all"); // state to manage the current filter (e.g., all, confirmed, pending, cancelled)
   const [loading, setLoading] = useState(true); // state to manage loading state
@@ -23,7 +22,7 @@ const Dashboard = () => {
   // useNavigate hook from react-router-dom to programmatically navigate between routes
   const navigate = useNavigate();
 
-// function to handle user logout by signing out from Firebase Authentication and navigating back to the home page
+  // function to handle user logout by signing out from Firebase Authentication and navigating back to the home page
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -124,7 +123,7 @@ const Dashboard = () => {
 
   return (
     <section className="min-h-screen mx-auto py-6 md:py-10 pt-24 md:pt-28 bg-gray-50">
-      <Navbar onLogout={handleLogout} />
+      <Navbar user={user} onLogout={handleLogout} />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-8 md:mb-12 flex items-center justify-between">
           <div>
@@ -221,7 +220,7 @@ const Dashboard = () => {
             </span>
           </button>
         </div>
-        
+
         {/* Sort button */}
         <div className="mb-6 flex justify-start">
           <button
