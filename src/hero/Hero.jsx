@@ -13,7 +13,7 @@ import { ArrowRight } from "lucide-react";
 export default function Hero({ user }) {
   return (
     <section>
-      <Navbar />
+      <Navbar user={user} />
 
       {/* Hero Section */}
       <div className="min-h-screen bg-gradient-to-br from-white via-purple-50 to-blue-50 md:pt-35 pt-19">
@@ -65,10 +65,15 @@ export default function Hero({ user }) {
               transition={{ delay: 0.5 }}
               className="flex flex-col md:flex-row gap-4 md:gap-6"
             >
-              <Link to={user ? "/dashboard" : "/login"} className="flex-1 md:flex-none">
-                <button className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-blue-600 
+              <Link
+                to={user ? "/dashboard" : "/login"}
+                className="flex-1 md:flex-none"
+              >
+                <button
+                  className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-blue-600 
                 text-white px-8 py-4 rounded-lg text-lg font-bold hover:shadow-lg hover:scale-105 
-                transition duration-300 flex items-center justify-center gap-2 group">
+                transition duration-300 flex items-center justify-center gap-2 group"
+                >
                   Get Started{" "}
                   <ArrowRight
                     className="group-hover:translate-x-1 transition"
@@ -76,8 +81,10 @@ export default function Hero({ user }) {
                   />
                 </button>
               </Link>
-              <button className="w-full md:w-auto border-2 border-purple-600 text-purple-600 
-              px-8 py-4 rounded-lg text-lg font-bold hover:bg-purple-50 transition duration-300">
+              <button
+                className="w-full md:w-auto border-2 border-purple-600 text-purple-600 
+              px-8 py-4 rounded-lg text-lg font-bold hover:bg-purple-50 transition duration-300"
+              >
                 Learn More
               </button>
             </motion.div>
