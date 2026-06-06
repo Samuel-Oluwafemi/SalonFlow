@@ -26,21 +26,25 @@ export function Navbar({ user, onLogout }) {
         {/* Navs middle */}
         <div className="hidden md:block">
           <ul className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4">
-            <Link to="/">
-              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Home
-              </li>
-            </Link>
-            <Link to={"/services"}>
-              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Services
-              </li>
-            </Link>
-            <a href="#reviews">
-              <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
-                Reviews
-              </li>
-            </a>
+            {!user && (
+              <>
+                <Link to="/">
+                  <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                    Home
+                  </li>
+                </Link>
+                <Link to={"/services"}>
+                  <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                    Services
+                  </li>
+                </Link>
+                <a href="#reviews">
+                  <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
+                    Reviews
+                  </li>
+                </a>
+              </>
+            )}
             {user && (
               <Link to="/dashboard">
                 <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
@@ -50,19 +54,19 @@ export function Navbar({ user, onLogout }) {
             )}
           </ul>
         </div>
-
         {/* Navs right - Get Started & Logout */}
         <div className="flex items-center gap-2 md:gap-3">
-          <Link
-            to={"/services"}
-            target="_blank"
-            className="hidden md:hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
+          {!user && (
+            <Link
+              to={"/login"}
+              target="_blank"
+              className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
             rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
             "
-          >
-            Get Started
-          </Link>
-
+            >
+              Get Started
+            </Link>
+          )}
           <button
             onClick={() => setOpen(!open)}
             data-aos="fade-left"
@@ -81,7 +85,9 @@ export function Navbar({ user, onLogout }) {
             >
               <div className="flex flex-col md:flex-row items-center md:gap-2">
                 <LogOut size={20} />
-                <span className="text-xs md:text-sm font-semibold">Sign out</span>
+                <span className="text-xs md:text-sm font-semibold">
+                  Sign out
+                </span>
               </div>
             </button>
           )}
@@ -93,39 +99,56 @@ export function Navbar({ user, onLogout }) {
           className="md:hidden bg-black/80 rounded-lg p-4 flex flex-col text-bold 
           text-md text-white gap-8 items-center mt-8 md:mt-3"
         >
-          <Link to="/">
-            <li href="#home" className="cursor-pointer hover:text-purple-500">
-              Home
-            </li>
-          </Link>
-          <Link to={"/services"}>
+          {!user && (
+            <>
+              <Link to="/">
+                <li
+                  href="#home"
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer hover:text-purple-500"
+                >
+                  Home
+                </li>
+              </Link>
+              <Link to={"/services"}>
+                <li
+                  href="#services"
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer hover:text-purple-500"
+                >
+                  Services
+                </li>
+              </Link>
+              <li
+                href="#reviews"
+                onClick={() => setOpen(false)}
+                className="cursor-pointer hover:text-purple-500 active:purple-500"
+              >
+                Reviews
+              </li>
+            </>
+          )}
+          <Link to="/login">
             <li
-              href="#services"
-              className="cursor-pointer hover:text-purple-500"
+              onClick={() => setOpen(false)}
+              className="cursor-pointer hover:text-purple-500 active:purple-500"
             >
-              Services
-            </li>
-          </Link>
-          <li
-            href="#reviews"
-            className="cursor-pointer hover:text-purple-500 active:purple-500"
-          >
-            Reviews
-          </li>
-          <Link to={user ? "/dashboard" : "/login"}>
-            <li className="cursor-pointer hover:text-purple-500 active:purple-500">
               Dashboard
             </li>
           </Link>
-          <Link
-            to={"/services"}
-            target="_blank"
-            className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
+
+          {!user && (
+            <Link
+              to={"/services"}
+              onClick={() => setOpen(false)}
+              target="_blank"
+              className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
-          >
-            Get Started
-          </Link>
+            >
+              Get Started
+            </Link>
+          )}
         </ul>
       )}
     </nav>
