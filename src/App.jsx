@@ -67,7 +67,9 @@ function App() {
   return (
     <>
       <div className="max-w-7xl font-poppins bg-white mx-auto ">
+        {location.pathname !== "/login" && (
         <Navbar user={user} />
+        )}
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
