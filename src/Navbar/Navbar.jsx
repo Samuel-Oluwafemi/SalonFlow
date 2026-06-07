@@ -45,7 +45,7 @@ export function Navbar({ user, onLogout }) {
                 </a>
               </>
             )}
-            {user && (
+            {user?.role === "admin" && (
               <Link to="/dashboard">
                 <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
                   Dashboard
@@ -76,7 +76,8 @@ export function Navbar({ user, onLogout }) {
           </button>
 
           {/* Logout Button - appears on all screens */}
-          {onLogout && (
+          {/* Combine RBAC + onLogout */}
+          {user?.role === "admin" && onLogout && (
             <button
               onClick={onLogout}
               data-aos="fade-left"
