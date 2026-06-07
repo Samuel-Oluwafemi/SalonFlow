@@ -16,7 +16,7 @@ export function Navbar({ user, onLogout }) {
           className={`flex gap-1 text-2xl md:text-2xl cursor-pointer font-playfair font-bold text-black`}
         >
           <div className="mt-4"></div>
-          <Link to={user ? "/dashboard" : "/dashboard"}>
+          <Link to={user ? "/" : "/dashboard"}>
             <div className="flex">
               <Boxes className="size-8 text-purple-600" /> SalonFlow
             </div>
@@ -26,7 +26,7 @@ export function Navbar({ user, onLogout }) {
         {/* Navs middle */}
         <div className="hidden md:block">
           <ul className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4">
-            {!user && !user?.role && (
+            {!user && (
               <>
                 <Link to="/">
                   <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
