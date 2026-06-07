@@ -1,4 +1,3 @@
-import { Navbar } from "../Navbar/Navbar";
 import { Features } from "./Features";
 import { Testimonials } from "./Testimonials";
 import { Stats } from "./Stats";
@@ -13,8 +12,6 @@ import { ArrowRight } from "lucide-react";
 export default function Hero({ user }) {
   return (
     <section>
-      <Navbar user={user} />
-
       {/* Hero Section */}
       <div className="min-h-screen bg-gradient-to-br from-white via-purple-50 to-blue-50 md:pt-35 pt-19">
         <main className="flex md:flex-row flex-col md:gap-30 gap-10 justify-center items-center max-w-7xl mx-auto px-4 md:px-8">
