@@ -60,8 +60,9 @@ function App() {
 
   const location = useLocation();
 
-  if (authLoading) {
-    return <div className="loading-screen">Checking session...</div>;
+  // Don't show loading screen on login page
+  if (authLoading && location.pathname !== "/login" && authLoading && location.pathname === "/") {
+    return <div className="min-h-screen flex items-center justify-center">Checking session...</div>;
   }
 
   return (
@@ -103,9 +104,8 @@ function App() {
             <Route
               path="/dashboard"
               element={
-                // RBAC: Only allow access to dashboard if user is logged in and has admin role,
-                // otherwise redirect to login
-                user?.role === "admin" ? (
+                // Only allow access to dashboard if user is logged in
+                user ? (
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
