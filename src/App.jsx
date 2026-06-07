@@ -1,3 +1,4 @@
+import { Navbar } from "./Navbar/Navbar";
 import Hero from "./hero/Hero";
 import BookingFlow from "./BookingFlow/BookingFlow";
 import Dashboard from "./admin/Dashboard";
@@ -17,26 +18,32 @@ function App() {
     // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       //  Stores auth state globally and sets loading to false once auth state is determined
-      setUser(currentUser);
-      if (currentUser) {
-        try {
-          // get user role fom firebase
-          const userDocRef = doc(db, "users", currentUser.uid);
-          const userSnap = await getDoc(userDocRef);
-          let role = "user"; // default role
-          if (userSnap.exists()) {
-            role = userSnap.data().role || "user";
-          }
+      if (!currentUser) {
+        setUser(null);
+        setAuthLoading(false);
+        return;
+      }
 
-          // build RBAC user object
-          setUser({
-            uid: currentUser.uid,
-            email: currentUser.email,
-            role: role,
-          });
-        } catch (error) {
-          console.error("Error fetching user role:", error);
+      try {
+        // get user role fom firebase
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userSnap = await getDoc(userDocRef);
+
+        let role = "user"; // default role
+
+        // if user document exists and has a role field, use it
+        if (userSnap.exists()) {
+          role = userSnap.data().role || "user";
         }
+
+        // build RBAC user object
+        setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          role,
+        });
+      } catch (error) {
+        console.error("Error fetching user role:", error);
 
         // fallback to basic user object if role fetch fails
         setUser({
@@ -60,6 +67,7 @@ function App() {
   return (
     <>
       <div className="max-w-7xl font-poppins bg-white mx-auto ">
+        <Navbar user={user} />
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
@@ -93,9 +101,9 @@ function App() {
             <Route
               path="/dashboard"
               element={
-                // RBAC: Only allow access to dashboard if user is logged in and has admin role, 
+                // RBAC: Only allow access to dashboard if user is logged in and has admin role,
                 // otherwise redirect to login
-                user ?.role === "admin" ? ( 
+                user?.role === "admin" ? (
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
