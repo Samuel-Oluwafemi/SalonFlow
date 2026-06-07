@@ -107,9 +107,12 @@ const Dashboard = ({ user }) => {
           ...doc.data(), // spread the document data into the booking object
         }));
 
-        bookingsList.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-        );
+        bookingsList.sort((a, b) => {
+          // Handle Firestore Timestamp objects
+          const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
+          const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
+          return bTime - aTime; // Latest first
+        });
         setBookings(bookingsList);
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -221,18 +224,20 @@ const Dashboard = ({ user }) => {
           </button>
         </div>
 
-        {/* Sort button */}
+        {/* Sort by latest button */}
         <div className="mb-6 flex justify-start">
           <button
             className="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
             hover:bg-gray-900 transition duration-300 flex items-center gap-2"
-            onClick={() =>
-              setBookings(
-                [...bookings].sort(
-                  (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-                ),
-              )
-            }
+            onClick={() => {
+              const sorted = [...bookings].sort((a, b) => {
+                // Handle Firestore Timestamp objects
+                const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
+                const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
+                return bTime - aTime; // Latest first
+              });
+              setBookings(sorted);
+            }}
           >
             ↓ Sort by Latest
           </button>
