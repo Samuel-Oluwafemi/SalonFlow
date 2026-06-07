@@ -16,7 +16,7 @@ export function Navbar({ user, onLogout }) {
           className={`flex gap-1 text-2xl md:text-2xl cursor-pointer font-playfair font-bold text-black`}
         >
           <div className="mt-4"></div>
-          <Link to="/">
+          <Link to={user ? "/dashboard" : "/dashboard"}>
             <div className="flex">
               <Boxes className="size-8 text-purple-600" /> SalonFlow
             </div>
@@ -26,7 +26,7 @@ export function Navbar({ user, onLogout }) {
         {/* Navs middle */}
         <div className="hidden md:block">
           <ul className="hidden md:flex space-x-10 text-black text-md font-semibold gap-4">
-            {!user && (
+            {!user && !user?.role && (
               <>
                 <Link to="/">
                   <li className="cursor-pointer hover:text-purple-600 active:fuchsia-500">
@@ -58,8 +58,7 @@ export function Navbar({ user, onLogout }) {
         <div className="flex items-center gap-2 md:gap-3">
           {!user && (
             <Link
-              to={"/login"}
-              target="_blank"
+              to={"/services"}
               className="hidden md:block border-b-2 bg-gray-100 border-purple-600 text-black px-4 py-3 
             rounded-lg font-semibold hover:bg-gray-200 transition duration-300 cursor-pointer
             "
@@ -129,6 +128,7 @@ export function Navbar({ user, onLogout }) {
               </li>
             </>
           )}
+          {user && (
           <Link to="/login">
             <li
               onClick={() => setOpen(false)}
@@ -137,12 +137,12 @@ export function Navbar({ user, onLogout }) {
               Dashboard
             </li>
           </Link>
+          )}
 
           {!user && (
             <Link
               to={"/services"}
               onClick={() => setOpen(false)}
-              target="_blank"
               className="cursor-pointer inline bg-purple-700 w-full text-center rounded-full 
             py-3 px-2 hover:bg-gradient-to-r from-white to-fuchsia-700 hover:text-black
             hover:border-white hover:shadow-2xl"
