@@ -19,6 +19,11 @@ const Dashboard = ({ user }) => {
   const [filter, setFilter] = useState("all"); // state to manage the current filter (e.g., all, confirmed, pending, cancelled)
   const [loading, setLoading] = useState(true); // state to manage loading state
   const [confirmedBooking, setConfirmedBooking] = useState(null); // state for confirmation modal
+  const [startDate, setStartDate] = useState(""); // state for date range start
+  const [endDate, setEndDate] = useState(""); // state for date range end
+  const [dateRangeActive, setDateRangeActive] = useState(false); // state to track if date range filter is active
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false); // state for sort dropdown
+  const [sortType, setSortType] = useState("latest"); // state to track current sort type
   // useNavigate hook from react-router-dom to programmatically navigate between routes
   const navigate = useNavigate();
 
@@ -224,24 +229,141 @@ const Dashboard = ({ user }) => {
           </button>
         </div>
 
-        {/* Sort by latest button */}
-        <div className="mb-6 flex justify-start">
+        {/* Sort and Filter Options */}
+        <div className="mb-6 flex flex-col-2 md:flex-row gap-3 justify-between items-start md:items-center">
+          {/* Sort Dropdown */}
+          <div className="relative w-full md:w-auto">
+            <button
+              onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+              className="w-full md:w-auto px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
+              hover:bg-gray-900 transition duration-300 flex items-center justify-between md:justify-center gap-2"
+            >
+              📊 Sort: {sortType === "latest" ? "Latest" : "Oldest"}
+              <span className="ml-1">{sortDropdownOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {sortDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-full md:w-40 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                <button
+                  onClick={() => {
+                    const sorted = [...bookings].sort((a, b) => {
+                      const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
+                      const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
+                      return bTime - aTime;
+                    });
+                    setBookings(sorted);
+                    setSortType("latest");
+                    setSortDropdownOpen(false);
+                  }}
+                  className={`w-full px-4 py-2 text-left text-sm transition ${
+                    sortType === "latest"
+                      ? "bg-purple-500 text-white font-bold"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  ↓ Latest First
+                </button>
+                <button
+                  onClick={() => {
+                    const sorted = [...bookings].sort((a, b) => {
+                      const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
+                      const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
+                      return aTime - bTime;
+                    });
+                    setBookings(sorted);
+                    setSortType("oldest");
+                    setSortDropdownOpen(false);
+                  }}
+                  className={`w-full px-4 py-2 text-left text-sm transition ${
+                    sortType === "oldest"
+                      ? "bg-purple-500 text-white font-bold"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  ↑ Oldest First
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Date Range Toggle Button */}
           <button
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-bold
-            hover:bg-gray-900 transition duration-300 flex items-center gap-2"
-            onClick={() => {
-              const sorted = [...bookings].sort((a, b) => {
-                // Handle Firestore Timestamp objects
-                const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
-                const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
-                return bTime - aTime; // Latest first
-              });
-              setBookings(sorted);
-            }}
+            onClick={() => setDateRangeActive(!dateRangeActive)}
+            className={`w-full md:w-auto px-4 py-2 rounded-lg text-sm font-bold transition duration-300 ${
+              dateRangeActive
+                ? "bg-purple-600 text-white hover:bg-purple-700"
+                : "bg-gray-800 text-white hover:bg-gray-900"
+            }`}
           >
-            ↓ Sort by Latest
+            📅 Date Range
           </button>
         </div>
+
+        {/* Date Range Filter - Mobile Optimized */}
+        {dateRangeActive && (
+          <div className="mb-6 p-3 md:p-4 bg-white rounded-lg shadow-md border border-gray-200">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Filter by Date Range</h3>
+            <div className="flex flex-col gap-3">
+              {/* Date inputs row */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Start</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full px-2 md:px-3 py-2 border border-gray-300 rounded-lg text-xs md:text-sm
+                    focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">End</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full px-2 md:px-3 py-2 border border-gray-300 rounded-lg text-xs md:text-sm
+                    focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+              </div>
+
+              {/* Buttons row */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    if (!startDate || !endDate) {
+                      alert("Please select both start and end dates");
+                      return;
+                    }
+                    const filtered = bookings.filter((booking) => {
+                      const bookingDate = new Date(booking.date);
+                      const start = new Date(startDate);
+                      const end = new Date(endDate);
+                      return bookingDate >= start && bookingDate <= end;
+                    });
+                    setBookings(filtered);
+                  }}
+                  className="flex-1 px-3 py-2 bg-purple-600 text-white rounded-lg text-xs md:text-sm font-bold
+                  hover:bg-purple-700 transition duration-300"
+                >
+                  Apply
+                </button>
+                <button
+                  onClick={() => {
+                    setStartDate("");
+                    setEndDate("");
+                    setDateRangeActive(false);
+                  }}
+                  className="flex-1 px-3 py-2 bg-gray-400 text-white rounded-lg text-xs md:text-sm font-bold
+                  hover:bg-gray-500 transition duration-300"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Loading state */}
         {loading ? (
