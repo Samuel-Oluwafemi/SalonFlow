@@ -96,6 +96,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
               required
+              autoComplete="email"
             />
           </div>
 
@@ -117,6 +118,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
               required
+              autoComplete="current-password"
             />
 
             <a href="#">
