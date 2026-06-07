@@ -31,12 +31,14 @@ export default function Login() {
 
     try {
       // Authenticate with Firebase
-      console.log("Auth started")
+      console.log("Auth started");
       await signInWithEmailAndPassword(auth, email, password);
       console.log("Login successful");
-      navigate("/dashboard");
+      // Navigate immediately without waiting for state updates
+      navigate("/dashboard", { replace: true });
     } catch (error) {
       // Handle Firebase errors
+      setLoading(false);
       if (error.code === "auth/user-not-found") {
         setError("Email address not found");
       } else if (error.code === "auth/wrong-password") {
@@ -47,8 +49,6 @@ export default function Login() {
         setError(error.message || "Login failed. Please try again.");
       }
       console.error("Login error:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
