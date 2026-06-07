@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-export default function Hero({ user }) {
+export default function Hero() {
   return (
     <section>
       {/* Hero Section */}
@@ -63,7 +63,7 @@ export default function Hero({ user }) {
               className="flex flex-col md:flex-row gap-4 md:gap-6"
             >
               <Link
-                to={user ? "/dashboard" : "/login"}
+                to="/services"
                 className="flex-1 md:flex-none"
               >
                 <button
@@ -78,11 +78,12 @@ export default function Hero({ user }) {
                   />
                 </button>
               </Link>
+
               <button
                 className="w-full md:w-auto border-2 border-purple-600 text-purple-600 
               px-8 py-4 rounded-lg text-lg font-bold hover:bg-purple-50 transition duration-300"
               >
-                Learn More
+                  Learn More
               </button>
             </motion.div>
 
