@@ -31,7 +31,9 @@ export default function Login() {
 
     try {
       // Authenticate with Firebase
+      console.log("Auth started")
       await signInWithEmailAndPassword(auth, email, password);
+      console.log("Login successful");
       navigate("/dashboard");
     } catch (error) {
       // Handle Firebase errors
