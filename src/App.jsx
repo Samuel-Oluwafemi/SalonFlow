@@ -4,8 +4,9 @@ import Dashboard from "./admin/Dashboard";
 import Login from "./admin/Login";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
 function App() {
   // Auth state to manage user login status
@@ -14,9 +15,37 @@ function App() {
 
   useEffect(() => {
     // Listen for authentication state changes
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       //  Stores auth state globally and sets loading to false once auth state is determined
       setUser(currentUser);
+      if (currentUser) {
+        try {
+          // get user role fom firebase
+          const userDocRef = doc(db, "users", currentUser.uid);
+          const userSnap = await getDoc(userDocRef);
+          let role = "user"; // default role
+          if (userSnap.exists()) {
+            role = userSnap.data().role || "user";
+          }
+
+          // build RBAC user object
+          setUser({
+            uid: currentUser.uid,
+            email: currentUser.email,
+            role: role,
+          });
+        } catch (error) {
+          console.error("Error fetching user role:", error);
+        }
+
+        // fallback to basic user object if role fetch fails
+        setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          role: "user",
+        });
+        console.log("User is logged in:", currentUser.email);
+      }
       setAuthLoading(false); // Set loading to false after auth state is determined
     });
     return () => unsubscribe();
@@ -64,7 +93,9 @@ function App() {
             <Route
               path="/dashboard"
               element={
-                user ? (
+                // RBAC: Only allow access to dashboard if user is logged in and has admin role, 
+                // otherwise redirect to login
+                user ?.role === "admin" ? ( 
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
