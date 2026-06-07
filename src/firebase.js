@@ -12,7 +12,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-
 const app = initializeApp(firebaseConfig);
 // this line gives me access to the database
 export const db = getFirestore(app);
