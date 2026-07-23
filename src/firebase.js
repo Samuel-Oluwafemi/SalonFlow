@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; // Import Firestore to interact with the database
 import { getAuth } from "firebase/auth"; // Import Firebase Authentication
-import { Import } from "lucide-react";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

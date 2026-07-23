@@ -16,7 +16,7 @@ export function Navbar({ user, onLogout }) {
           className={`flex gap-1 text-2xl md:text-2xl cursor-pointer font-playfair font-bold text-black`}
         >
           <div className="mt-4"></div>
-          <Link to={user ? "/" : "/dashboard"}>
+          <Link to="/">
             <div className="flex">
               <Boxes className="size-8 text-purple-600" /> SalonFlow
             </div>

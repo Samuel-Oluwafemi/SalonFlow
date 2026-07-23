@@ -51,7 +51,6 @@ function App() {
           email: currentUser.email,
           role: "user",
         });
-        console.log("User is logged in:", currentUser.email);
       }
       setAuthLoading(false); // Set loading to false after auth state is determined
     });

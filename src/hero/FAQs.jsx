@@ -8,35 +8,43 @@ export const FAQs = () => {
   const faqs = [
     {
       question: "How do I book an appointment?",
-      answer: "Navigate to our services page, select your preferred service and sub-service, pick your date and time, enter your contact details, and confirm your booking. You'll receive a WhatsApp confirmation immediately.",
+      answer:
+        "Navigate to our services page, select your preferred service and sub-service, pick your date and time, enter your contact details, and confirm your booking. You'll receive a WhatsApp confirmation immediately.",
     },
     {
       question: "Can I cancel or reschedule my booking?",
-      answer: "Yes! You can reschedule by contacting us via WhatsApp with your booking details. Cancellations must be made at least 24 hours before your appointment for a full confirmation update.",
+      answer:
+        "Yes! You can reschedule by contacting us via WhatsApp with your booking details. Cancellations must be made at least 24 hours before your appointment for a full confirmation update.",
     },
     {
       question: "What payment methods do you accept?",
-      answer: "We accept cash payments at the time of service. Payment is made directly when you arrive for your appointment. No advance payment is required.",
+      answer:
+        "We accept cash payments at the time of service. Payment is made directly when you arrive for your appointment. No advance payment is required.",
     },
     {
       question: "What if I can't make my appointment?",
-      answer: "Contact us as soon as possible via the WhatsApp message you received with your booking. We'll help you reschedule for another time at no extra cost.",
+      answer:
+        "Contact us as soon as possible via the WhatsApp message you received with your booking. We'll help you reschedule for another time at no extra cost.",
     },
     {
       question: "Is my personal information safe?",
-      answer: "Your information is stored securely and only used for booking confirmations and service notifications. We never share your data with third parties.",
+      answer:
+        "Your information is stored securely and only used for booking confirmations and service notifications. We never share your data with third parties.",
     },
     {
       question: "How will I receive my booking confirmation?",
-      answer: "You'll receive an automatic WhatsApp message with your booking details including date, time, and service information. You'll also see it on your confirmation screen.",
+      answer:
+        "You'll receive an automatic WhatsApp message with your booking details including date, time, and service information. You'll also see it on your confirmation screen.",
     },
     {
       question: "Can I book multiple services at once?",
-      answer: "Each booking is for one service. If you need multiple services, you can create separate bookings for different time slots on the same day.",
+      answer:
+        "Each booking is for one service. If you need multiple services, you can create separate bookings for different time slots on the same day.",
     },
     {
       question: "What's your cancellation policy?",
-      answer: "Cancellations made 24 hours before your appointment are free. Cancellations within 24 hours may incur a cancellation fee. No-shows will be considered a cancellation.",
+      answer:
+        "Cancellations made 24 hours before your appointment are free. Cancellations within 24 hours may incur a cancellation fee. No-shows will be considered a cancellation.",
     },
   ];
 
@@ -68,11 +76,13 @@ export const FAQs = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden hover:border-purple-300 transition duration-300"
+              className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden 
+              hover:border-purple-300 transition duration-300"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-                className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition duration-200"
+                className="w-full px-6 py-5 flex items-center justify-between 
+                hover:bg-gray-50 transition duration-200"
               >
                 <h3 className="text-lg font-bold text-gray-900 text-left font-sora">
                   {faq.question}
@@ -96,10 +106,9 @@ export const FAQs = () => {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <div className="px-6 py-4 bg-gradient-to-r from-purple-50 to-blue-50 border-t-2 border-purple-200">
-                  <p className="text-gray-700 leading-relaxed">
-                    {faq.answer}
-                  </p>
+                <div className="px-6 py-4 bg-gradient-to-r from-purple-50 to-blue-50 
+                border-t-2 border-purple-200">
+                  <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                 </div>
               </motion.div>
             </motion.div>
