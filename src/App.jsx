@@ -60,16 +60,23 @@ function App() {
   const location = useLocation();
 
   // Don't show loading screen on login page
-  if (authLoading && location.pathname !== "/login" && authLoading && location.pathname === "/") {
-    return <div className="min-h-screen flex items-center justify-center">Checking session...</div>;
+  if (
+    authLoading &&
+    location.pathname !== "/login" &&
+    authLoading &&
+    location.pathname === "/"
+  ) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Checking session...
+      </div>
+    );
   }
 
   return (
     <>
       <div className="max-w-7xl font-poppins bg-white mx-auto ">
-        {location.pathname !== "/login" && (
-        <Navbar user={user} />
-        )}
+        {location.pathname !== "/login" && <Navbar user={user} />}
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
